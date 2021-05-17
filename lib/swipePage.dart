@@ -27,7 +27,8 @@ void initState() {
   }
 }
 
-List<SwipeItem> _swipeItems = List<SwipeItem>();
+
+List<SwipeItem> _swipeItems = [];
 MatchEngine _matchEngine;
 GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 List<String> _names = ["Red", "Blue", "Green", "Yellow", "Orange"];
@@ -40,8 +41,8 @@ List<Color> _colors = [
 ];
 
 class Photos {
-  Color color = null;
-  String text = null;
+  Color color = Colors.indigo;
+  String text = "Indigo";
   Photos(this.color, this.text);
 }
 
@@ -85,13 +86,16 @@ class SwipePhotoState extends State<SwipePhotos> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
             child: Column(children: [
           Container(
+            //width: double.infinity,
             height: 550,
             child: SwipeCards(
               matchEngine: _matchEngine,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
+                  
                   alignment: Alignment.center,
                   color: _swipeItems[index].content.color,
                   //width: double.infinity,
