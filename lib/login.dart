@@ -18,7 +18,15 @@ class LogInPageState extends State<LogInPage> {
       body: Center(
         child: Column(
           children: [
-            Image.asset('images/background.jpg'),
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Image.asset(
+                'assets/images/background.jpg',
+                fit: BoxFit.fill,
+              ),
+              width: 300,
+              height: 300,
+            ),
             LogInFields().build(context),
             ElevatedButton(
                 onPressed: () {
