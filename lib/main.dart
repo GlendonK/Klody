@@ -3,32 +3,34 @@ import 'package:klody/login.dart';
 import 'package:klody/swipePage.dart';
 import 'package:klody/GraphPage.dart';
 
-void main() {
-  runApp(MyApp());}
+import 'appTheme.dart';
 
-class MyApp extends StatefulWidget{
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
   @override
   MyAppState createState() => MyAppState();
-  
 }
 
 class MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    title: "Khlody",
-    theme: ThemeData(primarySwatch: Colors.blue),
+        title: "Khlody",
+        theme: ThemeData(
+          primaryColor: Color(KhlodyTheme.primaryTheme),
+          buttonColor: Color(KhlodyTheme.superLikeColor),
+          scaffoldBackgroundColor: Color(KhlodyTheme.backgroundColor),
+          bottomNavigationBarTheme:
+              BottomNavigationBarThemeData(backgroundColor: Color(KhlodyTheme.bottomNavBarColor)),
+        ),
         initialRoute: '/',
-    routes: {
-      '/': (context) => LogInPage(),
-      '/page2': (context) => SwipePage(),
-      '/page3': (context) => GraphPage()
-    }
-
-  );
+        routes: {
+          '/': (context) => LogInPage(),
+          '/page2': (context) => SwipePage(),
+          '/page3': (context) => GraphPage()
+        });
   }
-  
 }
-
-

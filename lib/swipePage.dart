@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/login.dart';
@@ -124,16 +125,22 @@ class SwipePhotoState extends State<SwipePhotos> {
                   onPressed: () {
                     _matchEngine.currentItem.nope();
                   },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.nopeColor)),
                   child: Text("Nope")),
               ElevatedButton(
                   onPressed: () {
                     _matchEngine.currentItem.superLike();
                   },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.superLikeColor)),
                   child: Text("Superlike")),
               ElevatedButton(
                   onPressed: () {
                     _matchEngine.currentItem.like();
                   },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.likeColor)),
                   child: Text("Like"))
             ],
           )

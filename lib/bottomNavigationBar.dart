@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatefulWidget{
+class BottomNavBar extends StatefulWidget {
   int indexTab;
   BottomNavBar({@required this.indexTab});
   @override
   BottomNavBarState createState() {
-    
     return BottomNavBarState(indexTab: this.indexTab);
   }
-  
 }
 
 class BottomNavBarState extends State<BottomNavBar> {
   int indexTab;
   int selectedIndex;
   BottomNavBarState({@required this.indexTab});
-  
-   
 
-   void initState() {
-     selectedIndex=this.indexTab;
-     super.initState();
-   }  
+  void initState() {
+    selectedIndex = this.indexTab;
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -39,27 +35,25 @@ class BottomNavBarState extends State<BottomNavBar> {
 
   BottomNavigationBar getBar() {
     return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Swipe Page',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Graph Page',
-          ),
-        ],
-        currentIndex: selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      );
-
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Swipe Page',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business),
+          label: 'Graph Page',
+        ),
+      ],
+      currentIndex: selectedIndex,
+      selectedItemColor: Color(0xffe670b3),
+      onTap: _onItemTapped,
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return getBar();
   }
-  
-  
 }

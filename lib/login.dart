@@ -3,18 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:klody/swipePage.dart';
 import 'package:klody/GraphPage.dart';
 
-
-
 class LogInPage extends StatefulWidget {
   @override
   LogInPageState createState() => LogInPageState();
 }
 
 class LogInPageState extends State<LogInPage> {
-
- 
-
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,19 +18,18 @@ class LogInPageState extends State<LogInPage> {
       body: Center(
         child: Column(
           children: [
-            Image.asset('images/background.jpg')     
-            ,
+            Image.asset('images/background.jpg'),
             LogInFields().build(context),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
                 },
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).buttonColor),
                 child: Text("To Swipe Page")),
-                
           ],
         ),
       ),
-      
     );
   }
 }
@@ -45,7 +39,6 @@ class LogInFieldsState extends StatefulWidget {
   LogInFields createState() {
     return LogInFields();
   }
-  
 }
 
 class LogInFields extends State<LogInFieldsState> {
@@ -63,9 +56,10 @@ class LogInFields extends State<LogInFieldsState> {
               width: 300,
               child: TextFormField(
                   decoration: InputDecoration(
-                    isDense: true,
+                      isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
                       hintText: "Username"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -81,9 +75,10 @@ class LogInFields extends State<LogInFieldsState> {
               width: 300,
               child: TextFormField(
                   decoration: InputDecoration(
-                    isDense: true,
+                      isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
                       hintText: "Password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -95,56 +90,6 @@ class LogInFields extends State<LogInFieldsState> {
           )
         ],
       ),
-    );
-  }
-}
-
-class MyBottomNavigationBar extends StatefulWidget {
-
-  @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
-}
-
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-int _selectedIndex = 0;
-
-final List<Widget> _children =[
-      LogInPage(),
-      SwipePage(),
-      GraphPage()
-
-];
-
-  void _onItemTapped(int index) {
-  setState(() {
-    _selectedIndex = index;
-  });
-}
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(    
-      body: _children[_selectedIndex], 
-      bottomNavigationBar: BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Swipe',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          label: 'Recommended',
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.amber[800],
-      onTap: _onItemTapped,
-    ),
-      
     );
   }
 }

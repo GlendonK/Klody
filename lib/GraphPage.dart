@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 
 class GraphPage extends StatefulWidget {
@@ -8,9 +9,6 @@ class GraphPage extends StatefulWidget {
 }
 
 class GraphPageState extends State<GraphPage> {
-
-  
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +23,8 @@ class GraphPageState extends State<GraphPage> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
                 },
+                style: ElevatedButton.styleFrom(
+                    primary: Color(KhlodyTheme.superLikeColor)),
                 child: Text("To Swipe Page")),
           ],
         ),
