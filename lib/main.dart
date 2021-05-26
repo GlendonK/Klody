@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klody/login.dart';
 import 'package:klody/swipePage.dart';
+import 'package:klody/GraphPage.dart';
 
 void main() {
   runApp(MyApp());}
@@ -12,17 +13,22 @@ class MyApp extends StatefulWidget{
 }
 
 class MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
     title: "Khlody",
     theme: ThemeData(primarySwatch: Colors.blue),
-    initialRoute: '/',
+        initialRoute: '/',
     routes: {
       '/': (context) => LogInPage(),
-      '/page2': (context) => SwipePage()
+      '/page2': (context) => SwipePage(),
+      '/page3': (context) => GraphPage()
     }
+
   );
   }
   
 }
+
+

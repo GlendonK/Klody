@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/swipePage.dart';
+import 'package:klody/GraphPage.dart';
+
+
 
 class LogInPage extends StatefulWidget {
   @override
@@ -7,24 +11,31 @@ class LogInPage extends StatefulWidget {
 }
 
 class LogInPageState extends State<LogInPage> {
-  @override
+
+ 
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Log In"),
+        title: Text("Klody"),
       ),
       body: Center(
         child: Column(
           children: [
+            Image.asset('images/background.jpg')     
+            ,
             LogInFields().build(context),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
                 },
-                child: Text("To Swipe Page"))
+                child: Text("To Swipe Page")),
+                
           ],
         ),
       ),
+      
     );
   }
 }
@@ -84,6 +95,56 @@ class LogInFields extends State<LogInFieldsState> {
           )
         ],
       ),
+    );
+  }
+}
+
+class MyBottomNavigationBar extends StatefulWidget {
+
+  @override
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+int _selectedIndex = 0;
+
+final List<Widget> _children =[
+      LogInPage(),
+      SwipePage(),
+      GraphPage()
+
+];
+
+  void _onItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index;
+  });
+}
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(    
+      body: _children[_selectedIndex], 
+      bottomNavigationBar: BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business),
+          label: 'Swipe',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school),
+          label: 'Recommended',
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: _onItemTapped,
+    ),
+      
     );
   }
 }

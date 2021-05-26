@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:klody/login.dart';
+import 'package:klody/GraphPage.dart';
+
 
 class SwipePage extends StatefulWidget {
   @override
   SwipePageState createState() => SwipePageState();
+  
   
 }
 
@@ -22,7 +26,15 @@ void initState() {
       appBar: AppBar(
         title: Text("Swipe Page"),
       ),
-      body: SwipePhotos()
+      body: Center(
+        child: Column(
+          children: [
+            SwipePhotos() 
+            ,
+            MyBottomNavigationBar()
+          ],
+        ),
+      ),  
     );
   }
 }
@@ -134,5 +146,35 @@ class SwipePhotoState extends State<SwipePhotos> {
                 ],
               )
             ]));
+  }
+}
+
+class MyBottomNavigationBar extends StatelessWidget {
+ 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height:75,
+      padding: EdgeInsets.only(top:5, bottom: 30),
+      color: Color.fromRGBO(234, 213, 253, 1),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        IconButton(
+          icon: Icon(Icons.home),
+          onPressed: (){
+            Navigator.pushReplacementNamed(context,'/page2');
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.business),
+          onPressed: (){
+            Navigator.pushReplacementNamed(context,'/page3');
+          },
+        ),
+      ],
+    ),
+      
+    );
   }
 }
