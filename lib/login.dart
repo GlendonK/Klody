@@ -20,10 +20,10 @@ class LogInPageState extends State<LogInPage> {
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: Image.asset(
+              child: ClipOval(child: Image.asset(
                 'assets/images/background.jpg',
                 fit: BoxFit.fill,
-              ),
+              ),),
               width: 300,
               height: 300,
             ),
