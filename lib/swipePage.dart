@@ -1,24 +1,23 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/bottomNavigationBar.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/login.dart';
 import 'package:klody/GraphPage.dart';
 
-
 class SwipePage extends StatefulWidget {
   @override
   SwipePageState createState() => SwipePageState();
-  
-  
 }
 
 class SwipePageState extends State<SwipePage> {
-
-@override
-void initState() {
-  load();
-  super.initState();
-}
+  @override
+  void initState() {
+    load();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +27,13 @@ void initState() {
       ),
       body: Center(
         child: Column(
-          children: [
-            SwipePhotos() 
-            ,
-            MyBottomNavigationBar()
-          ],
+          children: [SwipePhotos()],
         ),
-      ),  
+      ),
+      bottomNavigationBar: BottomNavBar(indexTab: 0),
     );
   }
 }
-
 
 List<SwipeItem> _swipeItems = [];
 MatchEngine _matchEngine;
@@ -85,11 +80,9 @@ void load() {
   _matchEngine = MatchEngine(swipeItems: _swipeItems);
 }
 
-class SwipePhotos extends StatefulWidget {  
-  
+class SwipePhotos extends StatefulWidget {
   @override
   SwipePhotoState createState() {
-    
     return SwipePhotoState();
   }
 }
@@ -98,8 +91,8 @@ class SwipePhotoState extends State<SwipePhotos> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-            child: Column(children: [
+        width: double.infinity,
+        child: Column(children: [
           Container(
             //width: double.infinity,
             height: 550,
@@ -107,7 +100,6 @@ class SwipePhotoState extends State<SwipePhotos> {
               matchEngine: _matchEngine,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  
                   alignment: Alignment.center,
                   color: _swipeItems[index].content.color,
                   //width: double.infinity,
@@ -116,65 +108,35 @@ class SwipePhotoState extends State<SwipePhotos> {
                     style: TextStyle(fontSize: 100),
                   ),
                 );
+              },
+              onStackFinished: () {
+                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                  content: Text("Stack Finished"),
+                  duration: Duration(milliseconds: 500),
+                ));
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.nope();
                   },
-                  onStackFinished: () {
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      content: Text("Stack Finished"),
-                      duration: Duration(milliseconds: 500),
-                    ));
+                  child: Text("Nope")),
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.superLike();
                   },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.nope();
-                      },
-                      child: Text("Nope")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.superLike();
-                      },
-                      child: Text("Superlike")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.like();
-                      },
-                      child: Text("Like"))
-                ],
-              )
-            ]));
-  }
-}
-
-class MyBottomNavigationBar extends StatelessWidget {
- 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height:75,
-      padding: EdgeInsets.only(top:5, bottom: 30),
-      color: Color.fromRGBO(234, 213, 253, 1),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(Icons.home),
-          onPressed: (){
-            Navigator.pushReplacementNamed(context,'/page2');
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.business),
-          onPressed: (){
-            Navigator.pushReplacementNamed(context,'/page3');
-          },
-        ),
-      ],
-    ),
-      
-    );
+                  child: Text("Superlike")),
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.like();
+                  },
+                  child: Text("Like"))
+            ],
+          )
+        ]));
   }
 }
