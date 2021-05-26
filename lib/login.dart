@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/swipePage.dart';
+import 'package:klody/GraphPage.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -11,17 +13,20 @@ class LogInPageState extends State<LogInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Log In"),
+        title: Text("Klody"),
       ),
       body: Center(
         child: Column(
           children: [
+            Image.asset('images/background.jpg'),
             LogInFields().build(context),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
                 },
-                child: Text("To Swipe Page"))
+                style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).buttonColor),
+                child: Text("To Swipe Page")),
           ],
         ),
       ),
@@ -34,7 +39,6 @@ class LogInFieldsState extends StatefulWidget {
   LogInFields createState() {
     return LogInFields();
   }
-  
 }
 
 class LogInFields extends State<LogInFieldsState> {
@@ -52,9 +56,10 @@ class LogInFields extends State<LogInFieldsState> {
               width: 300,
               child: TextFormField(
                   decoration: InputDecoration(
-                    isDense: true,
+                      isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
                       hintText: "Username"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -70,9 +75,10 @@ class LogInFields extends State<LogInFieldsState> {
               width: 300,
               child: TextFormField(
                   decoration: InputDecoration(
-                    isDense: true,
+                      isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
                       hintText: "Password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {

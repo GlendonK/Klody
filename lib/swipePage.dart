@@ -1,20 +1,24 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:klody/appTheme.dart';
+import 'package:klody/bottomNavigationBar.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:klody/login.dart';
+import 'package:klody/GraphPage.dart';
 
 class SwipePage extends StatefulWidget {
   @override
   SwipePageState createState() => SwipePageState();
-  
 }
 
 class SwipePageState extends State<SwipePage> {
-
-@override
-void initState() {
-  load();
-  super.initState();
-}
+  @override
+  void initState() {
+    load();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +26,15 @@ void initState() {
       appBar: AppBar(
         title: Text("Swipe Page"),
       ),
-      body: SwipePhotos()
+      body: Center(
+        child: Column(
+          children: [SwipePhotos()],
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(indexTab: 0),
     );
   }
 }
-
 
 List<SwipeItem> _swipeItems = [];
 MatchEngine _matchEngine;
@@ -73,11 +81,9 @@ void load() {
   _matchEngine = MatchEngine(swipeItems: _swipeItems);
 }
 
-class SwipePhotos extends StatefulWidget {  
-  
+class SwipePhotos extends StatefulWidget {
   @override
   SwipePhotoState createState() {
-    
     return SwipePhotoState();
   }
 }
@@ -86,8 +92,8 @@ class SwipePhotoState extends State<SwipePhotos> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-            child: Column(children: [
+        width: double.infinity,
+        child: Column(children: [
           Container(
             //width: double.infinity,
             height: 550,
@@ -95,7 +101,6 @@ class SwipePhotoState extends State<SwipePhotos> {
               matchEngine: _matchEngine,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  
                   alignment: Alignment.center,
                   color: _swipeItems[index].content.color,
                   //width: double.infinity,
@@ -104,35 +109,41 @@ class SwipePhotoState extends State<SwipePhotos> {
                     style: TextStyle(fontSize: 100),
                   ),
                 );
+              },
+              onStackFinished: () {
+                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                  content: Text("Stack Finished"),
+                  duration: Duration(milliseconds: 500),
+                ));
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.nope();
                   },
-                  onStackFinished: () {
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      content: Text("Stack Finished"),
-                      duration: Duration(milliseconds: 500),
-                    ));
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.nopeColor)),
+                  child: Text("Nope")),
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.superLike();
                   },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.nope();
-                      },
-                      child: Text("Nope")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.superLike();
-                      },
-                      child: Text("Superlike")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine.currentItem.like();
-                      },
-                      child: Text("Like"))
-                ],
-              )
-            ]));
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.superLikeColor)),
+                  child: Text("Superlike")),
+              ElevatedButton(
+                  onPressed: () {
+                    _matchEngine.currentItem.like();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(KhlodyTheme.likeColor)),
+                  child: Text("Like"))
+            ],
+          )
+        ]));
   }
 }
