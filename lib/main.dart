@@ -18,6 +18,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         title: "Khlody",
         theme: ThemeData(
           primaryColor: Color(KhlodyTheme.primaryTheme),
