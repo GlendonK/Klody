@@ -21,11 +21,12 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  http: ^0.13.3
   flutter:
     
     sdk: flutter
 
-  http: ^0.13.3
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,7 +45,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-      - assets/images/background.jpeg
+      - assets/images/background.jpg
       - assets/images/mental-health.png
 
   # The following line ensures that the Material Icons font is
