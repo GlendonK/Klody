@@ -1,14 +1,12 @@
+import 'dart:async';
 import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swipable/flutter_swipable.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:klody/login.dart';
-import 'package:klody/GraphPage.dart';
 
 class SwipePage extends StatefulWidget {
   @override
@@ -37,13 +35,32 @@ class SwipePageState extends State<SwipePage> {
     );
   }
 }
-
-//** Model class to to store each photo with its id */
-class Photos {
-  int id = 0;
-  String pic = "";
-  Photos(this.id, this.pic);
+  
+class Card extends StatelessWidget {
+  final String url;
+  final int id;
+  Card(this.url, this.id);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Swipable(
+      child: Container(
+        width: MediaQuery.of(context).size.width *0.9,
+        height: MediaQuery.of(context).size.height *0.7,
+      child: Image.network(this.url),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
+          ),
+          onSwipeLeft: null,
+          onSwipeRight: null,
+          onSwipeUp: null,
+          onSwipeDown: null,
+    );
+  }
 }
+
+
+
+
 
 class SwipePhotos extends StatefulWidget {
   @override
@@ -53,40 +70,11 @@ class SwipePhotos extends StatefulWidget {
 }
 
 class SwipePhotoState extends State<SwipePhotos> {
-  Future<List> apiPhoto = PhotosList().getPhotos(); // api call to get photos id and urls into a list
-  List<SwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
-  MatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  Future<List> apiPhoto = PhotosList()
+      .getPhotos(); // api call to get photos id and urls into a list
   List<int> id = []; // list to store photo id
   List<String> pic = []; // list ot store photo url
-
-//** function to append _swipeItems and initialise match engine */
-  void load() {
-    for (int i = 0; i < id.length; i++) {
-      _swipeItems.add(SwipeItem(
-          content: Photos(id[i], pic[i]),
-          likeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text("Liked ${id[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
-          },
-          nopeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text("Nope ${id[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
-          },
-          superlikeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text("Superliked ${id[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
-          }));
-    }
-
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
-  }
+  List<Card> cards = [];
 
   @override
   Widget build(BuildContext context) {
@@ -104,25 +92,15 @@ class SwipePhotoState extends State<SwipePhotos> {
                   log(snapshot.data[0].pic.toString());
                   //** append id and pic with the id and pic of api */
                   snapshot.data.forEach((element) {
-                    id.add(element.id);
+                    cards.add(Card(element.pic, element.id));
                   });
-                  snapshot.data.forEach((element) {
-                    pic.add(element.pic);
-                  });
-                  load(); // call load to use the id and pic list
-                  return SwipeCards(
-                    matchEngine: _matchEngine,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          alignment: Alignment.center,
-                          color: Color(0xFFFFFFFF), // card background color
-                          //width: double.infinity,
-                          //** fetch image from url and display */
-                          child: Image.network(snapshot.data[index].pic));
-                    },
-                    onStackFinished: () {
-                      log("FINISHED");
-                    },
+                  // call load to use the id and pic list
+                  return Container(
+                    width: MediaQuery.of(context).size.width *0.9,
+                    height: MediaQuery.of(context).size.height *0.7,
+                    child: Stack(
+                      children: cards,
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   log(snapshot.error.toString());
@@ -133,33 +111,7 @@ class SwipePhotoState extends State<SwipePhotos> {
                 return CircularProgressIndicator();
               },
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    _matchEngine.currentItem.nope();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Color(KhlodyTheme.nopeColor)),
-                  child: Text("Nope")),
-              ElevatedButton(
-                  onPressed: () {
-                    _matchEngine.currentItem.superLike();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Color(KhlodyTheme.superLikeColor)),
-                  child: Text("Superlike")),
-              ElevatedButton(
-                  onPressed: () {
-                    _matchEngine.currentItem.like();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Color(KhlodyTheme.likeColor)),
-                  child: Text("Like"))
-            ],
-          )
+          ), //Row(children: [ElevatedButton(onPressed: (){swipeRight();}, child: Text("swipe"))],)
         ]));
   }
 }
