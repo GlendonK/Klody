@@ -6,8 +6,6 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:klody/login.dart';
-import 'package:klody/GraphPage.dart';
 
 class SwipePage extends StatefulWidget {
   @override
@@ -66,19 +64,19 @@ class SwipePhotoState extends State<SwipePhotos> {
       _swipeItems.add(SwipeItem(
           content: Photos(id[i], pic[i]),
           likeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
           },
           nopeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Nope ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
           },
           superlikeAction: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
@@ -126,13 +124,15 @@ class SwipePhotoState extends State<SwipePhotos> {
                   );
                 } else if (snapshot.hasError) {
                   log(snapshot.error.toString());
-                  return Text("${snapshot.error}");
+                  log("${snapshot.error}");
+                  return Text("No Network Connection...");
                 }
 
                 // By default, show a loading spinner.
                 return Container(
-                  height: 150,
+                  height: 50,
                   width: 150,
+                  alignment: Alignment.center,
                   child: CircularProgressIndicator()
                   );
               },
