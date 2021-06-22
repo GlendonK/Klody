@@ -35,32 +35,31 @@ class SwipePageState extends State<SwipePage> {
     );
   }
 }
-  
+
+/// Create the stream
 class Card extends StatelessWidget {
   final String url;
   final int id;
   Card(this.url, this.id);
-  
+
   @override
   Widget build(BuildContext context) {
     return Swipable(
+      swipe: null,
       child: Container(
-        width: MediaQuery.of(context).size.width *0.9,
-        height: MediaQuery.of(context).size.height *0.7,
-      child: Image.network(this.url),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
-          ),
-          onSwipeLeft: null,
-          onSwipeRight: null,
-          onSwipeUp: null,
-          onSwipeDown: null,
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: Image.network(this.url),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16), color: Colors.white),
+      ),
+      onSwipeLeft: null,
+      onSwipeRight: null,
+      onSwipeUp: null,
+      onSwipeDown: null,
     );
   }
 }
-
-
-
-
 
 class SwipePhotos extends StatefulWidget {
   @override
@@ -96,8 +95,8 @@ class SwipePhotoState extends State<SwipePhotos> {
                   });
                   // call load to use the id and pic list
                   return Container(
-                    width: MediaQuery.of(context).size.width *0.9,
-                    height: MediaQuery.of(context).size.height *0.7,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.7,
                     child: Stack(
                       children: cards,
                     ),
