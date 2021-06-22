@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +59,8 @@ class SwipePhotoState extends State<SwipePhotos> {
   List<int> id = []; // list to store photo id
   List<String> pic = []; // list ot store photo url
 
-//** function to append _swipeItems and initialise match engine */
+//** function to append _swipeItems and initialise match engine */  
+  
   void load() {
     for (int i = 0; i < id.length; i++) {
       _swipeItems.add(SwipeItem(
@@ -130,7 +130,11 @@ class SwipePhotoState extends State<SwipePhotos> {
                 }
 
                 // By default, show a loading spinner.
-                return CircularProgressIndicator();
+                return Container(
+                  height: 150,
+                  width: 150,
+                  child: CircularProgressIndicator()
+                  );
               },
             ),
           ),
