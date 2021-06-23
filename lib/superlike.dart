@@ -4,22 +4,22 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-class GraphPage extends StatefulWidget {
-  //final String selectedPic;
-  //GraphPage(this.selectedPic, {Key key}): super(key: key);
-  @override
-  GraphPageState createState() => GraphPageState();
-}
-
-class GraphPageState extends State<GraphPage> {
-  @override
-  Widget build(BuildContext context) {
-    Map<String, double> dataMap = {
+class Superlike extends StatefulWidget {
+  final String selectedPic;
+  Superlike(this.selectedPic, {Key key}): super(key: key);
+  Map<String, double> dataMap = {
     "Flutter": 5,
     "React": 3,
     "Xamarin": 2,
     "Ionic": 2,
     };
+  @override
+  SuperlikeState createState() => SuperlikeState();
+}
+
+class SuperlikeState extends State<Superlike> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Klody"),
@@ -27,8 +27,8 @@ class GraphPageState extends State<GraphPage> {
       body: Center(
         child: Column(
           children: [
-            //Text(widget.selectedPic),
-            PieChart(dataMap: dataMap) ,
+            Text(widget.selectedPic),
+            PieChart(dataMap: widget.dataMap) ,
             Image.asset('assets/images/background.jpg'),
             ElevatedButton(
                 onPressed: () {

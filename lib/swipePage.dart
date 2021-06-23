@@ -6,6 +6,7 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:klody/superlike.dart';
 
 class SwipePage extends StatefulWidget {
   @override
@@ -56,6 +57,7 @@ class SwipePhotoState extends State<SwipePhotos> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<int> id = []; // list to store photo id
   List<String> pic = []; // list ot store photo url
+  String selectedPic = "";
 
 //** function to append _swipeItems and initialise match engine */  
   
@@ -76,6 +78,7 @@ class SwipePhotoState extends State<SwipePhotos> {
             ));
           },
           superlikeAction: () {
+            selectedPic = pic[i];
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -149,8 +152,12 @@ class SwipePhotoState extends State<SwipePhotos> {
                       primary: Color(KhlodyTheme.nopeColor)),
                   child: Text("Nope")),
               ElevatedButton(
-                  onPressed: () {
+                 onPressed: () {
                     _matchEngine.currentItem.superLike();
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => Superlike(selectedPic)));
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Color(KhlodyTheme.superLikeColor)),

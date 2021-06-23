@@ -31,7 +31,8 @@ class MyAppState extends State<MyApp> {
         routes: {
           '/': (context) => LogInPage(),
           '/page2': (context) => SwipePage(),
-          '/page3': (context) => GraphPage()
+          '/page3': (context) => GraphPage(),
+
         });
   }
 }
