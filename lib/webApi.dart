@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:klody/Photos.dart';
-import 'package:klody/swipePage.dart';
+import 'package:klody/trainingSwipePage.dart';
 
 class PhotosList {
   Future<List> getPhotos() async {

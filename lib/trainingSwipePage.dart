@@ -6,14 +6,14 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:klody/superlike.dart';
+import 'package:klody/superLike.dart';
 
-class SwipePage extends StatefulWidget {
+class TrainingSwipePage extends StatefulWidget {
   @override
-  SwipePageState createState() => SwipePageState();
+  TrainingSwipePageState createState() => TrainingSwipePageState();
 }
 
-class SwipePageState extends State<SwipePage> {
+class TrainingSwipePageState extends State<TrainingSwipePage> {
   @override
   void initState() {
     super.initState();

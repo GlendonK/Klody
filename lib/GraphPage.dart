@@ -15,10 +15,10 @@ class GraphPageState extends State<GraphPage> {
   @override
   Widget build(BuildContext context) {
     Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
+      "Flutter": 5,
+      "React": 3,
+      "Xamarin": 2,
+      "Ionic": 2,
     };
     return Scaffold(
       appBar: AppBar(
@@ -28,8 +28,11 @@ class GraphPageState extends State<GraphPage> {
         child: Column(
           children: [
             //Text(widget.selectedPic),
-            PieChart(dataMap: dataMap) ,
-            Image.asset('assets/images/background.jpg'),
+            Container(
+              width: 500,
+              height: 500,
+              alignment: Alignment.center,
+              child: PieChart(dataMap: dataMap)),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
@@ -44,4 +47,3 @@ class GraphPageState extends State<GraphPage> {
     );
   }
 }
-

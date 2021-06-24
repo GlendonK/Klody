@@ -28,8 +28,11 @@ class SuperlikeState extends State<Superlike> {
         child: Column(
           children: [
             Text(widget.selectedPic),
-            PieChart(dataMap: widget.dataMap) ,
-            Image.asset('assets/images/background.jpg'),
+            Container(
+              width: 500,
+              height: 500,
+              alignment: Alignment.center,
+              child: PieChart(dataMap: widget.dataMap)) ,
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/page2');
