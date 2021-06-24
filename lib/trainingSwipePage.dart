@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
+import 'package:klody/photoCard.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/superLike.dart';
@@ -36,12 +37,6 @@ class TrainingSwipePageState extends State<TrainingSwipePage> {
   }
 }
 
-//** Model class to to store each photo with its id */
-class Photos {
-  int id = 0;
-  String pic = "";
-  Photos(this.id, this.pic);
-}
 
 class SwipePhotos extends StatefulWidget {
   @override
@@ -64,7 +59,7 @@ class SwipePhotoState extends State<SwipePhotos> {
   void load() {
     for (int i = 0; i < id.length; i++) {
       _swipeItems.add(SwipeItem(
-          content: Photos(id[i], pic[i]),
+          content: PhotoCard(id[i], pic[i]),
           likeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${id[i]}"),
@@ -157,7 +152,7 @@ class SwipePhotoState extends State<SwipePhotos> {
                     Navigator.push(
                     context,
                     MaterialPageRoute(
-                    builder: (context) => Superlike(selectedPic)));
+                    builder: (context) => SuperLike(selectedPic)));
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Color(KhlodyTheme.superLikeColor)),
