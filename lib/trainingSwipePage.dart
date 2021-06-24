@@ -78,6 +78,10 @@ class SwipePhotoState extends State<SwipePhotos> {
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => SuperLike(selectedPic)));
           }));
     }
 
@@ -149,10 +153,6 @@ class SwipePhotoState extends State<SwipePhotos> {
               ElevatedButton(
                  onPressed: () {
                     _matchEngine.currentItem.superLike();
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => SuperLike(selectedPic)));
                   },
                   style: ElevatedButton.styleFrom(
                       primary: Color(KhlodyTheme.superLikeColor)),
