@@ -35,7 +35,7 @@ class GraphPageState extends State<GraphPage> {
               child: PieChart(dataMap: dataMap)),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/page2');
+                  Navigator.pushNamed(context, '/training');
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Color(KhlodyTheme.superLikeColor)),
@@ -43,7 +43,7 @@ class GraphPageState extends State<GraphPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(indexTab: 1),
+      bottomNavigationBar: BottomNavBar(indexTab: 2),
     );
   }
 }

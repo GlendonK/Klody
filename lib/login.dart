@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klody/trainingSwipePage.dart';
-import 'package:klody/GraphPage.dart';
+import 'package:klody/graphPage.dart';
 
 class LogInPage extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class LogInPageState extends State<LogInPage> {
             LogInFields().build(context),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/page2');
+                  Navigator.pushNamed(context, '/training');
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Theme.of(context).buttonColor),

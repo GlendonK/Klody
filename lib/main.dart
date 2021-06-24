@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:klody/dailySwipePage.dart';
 import 'package:klody/login.dart';
 import 'package:klody/trainingSwipePage.dart';
-import 'package:klody/GraphPage.dart';
+import 'package:klody/graphPage.dart';
 
 import 'appTheme.dart';
 
@@ -30,8 +31,9 @@ class MyAppState extends State<MyApp> {
         initialRoute: '/',
         routes: {
           '/': (context) => LogInPage(),
-          '/page2': (context) => TrainingSwipePage(),
-          '/page3': (context) => GraphPage(),
+          '/training': (context) => TrainingSwipePage(),
+          '/graph': (context) => GraphPage(),
+          '/daily': (context) => DailySwipePage(),
 
         });
   }

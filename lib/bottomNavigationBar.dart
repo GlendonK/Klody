@@ -26,10 +26,18 @@ class BottomNavBarState extends State<BottomNavBar> {
 
     if (selectedIndex == this.indexTab) {
       return;
-    } else if (this.indexTab == 0 && selectedIndex != this.indexTab) {
-      Navigator.pushReplacementNamed(context, '/page3');
-    } else if (this.indexTab == 1 && selectedIndex != this.indexTab) {
-      Navigator.pushReplacementNamed(context, '/page2');
+    } else if (this.indexTab == 0 && selectedIndex != this.indexTab && selectedIndex == 1) {
+      Navigator.pushReplacementNamed(context, '/daily');
+    } else if (this.indexTab == 0 && selectedIndex != this.indexTab && selectedIndex == 2) {
+      Navigator.pushReplacementNamed(context, '/graph');
+    } else if (this.indexTab == 1 && selectedIndex != this.indexTab && selectedIndex == 0) {
+      Navigator.pushReplacementNamed(context, '/training');
+    } else if (this.indexTab == 1 && selectedIndex != this.indexTab && selectedIndex == 2) {
+      Navigator.pushReplacementNamed(context, '/graph');
+    } else if (this.indexTab == 2 && selectedIndex != this.indexTab && selectedIndex == 0) {
+      Navigator.pushReplacementNamed(context, '/training');
+    } else if (this.indexTab == 2 && selectedIndex != this.indexTab && selectedIndex == 1) {
+      Navigator.pushReplacementNamed(context, '/daily');
     }
   }
 
@@ -39,6 +47,10 @@ class BottomNavBarState extends State<BottomNavBar> {
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Swipe Page',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.emoji_emotions),
+          label: 'Daily Pics',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.business),
