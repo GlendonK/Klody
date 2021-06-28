@@ -9,6 +9,8 @@ import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/superLike.dart';
 
+import 'super_swipe_page/superSwipeCards.dart';
+
 class SuperLike extends StatefulWidget {
   final String selectedPic;
   SuperLike(this.selectedPic);
@@ -55,8 +57,8 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   final selectedPic;
   SuperLikeSwipePhotoState(this.selectedPic);
   Future<List> apiPhoto = PhotosList().getPhotos(); // api call to get photos id and urls into a list
-  List<SwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
-  MatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
+  List<SuperSwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
+  SuperMatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<int> id = []; // list to store photo id
   List<String> pic = []; // list ot store photo url
@@ -65,7 +67,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   
   void load() {
     for (int i = 0; i < id.length; i++) {
-      _swipeItems.add(SwipeItem(
+      _swipeItems.add(SuperSwipeItem(
           content: PhotoCard(id[i], pic[i]),
           likeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -82,7 +84,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
           ));
     }
 
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
+    _matchEngine = SuperMatchEngine(swipeItems: _swipeItems);
   }
 
   @override
@@ -107,7 +109,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                     pic.add(element.pic);
                   });
                   load(); // call load to use the id and pic list
-                  return SwipeCards(
+                  return SuperSwipeCards(
                     matchEngine: _matchEngine,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
