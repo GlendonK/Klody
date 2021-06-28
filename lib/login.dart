@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klody/trainingSwipePage.dart';
-import 'package:klody/graphPage.dart';
 
 class LogInPage extends StatefulWidget {
   @override

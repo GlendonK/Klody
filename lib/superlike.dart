@@ -6,8 +6,6 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/photoCard.dart';
 import 'package:klody/webApi.dart';
-import 'package:swipe_cards/swipe_cards.dart';
-import 'package:klody/superLike.dart';
 
 import 'super_swipe_page/superSwipeCards.dart';
 
@@ -43,7 +41,6 @@ class SuperLikeState extends State<SuperLike> {
   }
 }
 
-
 class SuperLikeSwipePhotos extends StatefulWidget {
   final selectedPic;
   SuperLikeSwipePhotos(this.selectedPic);
@@ -56,32 +53,41 @@ class SuperLikeSwipePhotos extends StatefulWidget {
 class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   final selectedPic;
   SuperLikeSwipePhotoState(this.selectedPic);
-  Future<List> apiPhoto = PhotosList().getPhotos(); // api call to get photos id and urls into a list
-  List<SuperSwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
-  SuperMatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
+  Future<List> apiPhoto = PhotosList()
+      .getPhotos(); // api call to get photos id and urls into a list
+  List<SuperSwipeItem> _swipeItems =
+      []; // list to store the photo cards to be swiped
+  SuperMatchEngine
+      _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<int> id = []; // list to store photo id
   List<String> pic = []; // list ot store photo url
 
-//** function to append _swipeItems and initialise match engine */  
-  
+//** function to append _swipeItems and initialise match engine */
+
   void load() {
     for (int i = 0; i < id.length; i++) {
       _swipeItems.add(SuperSwipeItem(
-          content: PhotoCard(id[i], pic[i]),
-          likeAction: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Liked ${id[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
-          },
-          nopeAction: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Nope ${id[i]}"),
-              duration: Duration(milliseconds: 500),
-            ));
-          },
+        content: PhotoCard(id[i], pic[i]),
+        likeAction: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Liked ${id[i]}"),
+            duration: Duration(milliseconds: 500),
           ));
+          if (i == id.length - 1) {
+            Navigator.pushReplacementNamed(context, '/training');
+          }
+        },
+        nopeAction: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Nope ${id[i]}"),
+            duration: Duration(milliseconds: 500),
+          ));
+          if (i == id.length - 1) {
+            Navigator.pushReplacementNamed(context, '/training');
+          }
+        },
+      ));
     }
 
     _matchEngine = SuperMatchEngine(swipeItems: _swipeItems);
@@ -131,11 +137,10 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
 
                 // By default, show a loading spinner.
                 return Container(
-                  height: 50,
-                  width: 150,
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator()
-                  );
+                    height: 50,
+                    width: 150,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator());
               },
             ),
           ),
