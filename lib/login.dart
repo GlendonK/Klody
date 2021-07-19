@@ -114,25 +114,25 @@ class LogInFields extends State<LogInFieldsState> {
                       _passwordController.text),
                   duration: Duration(milliseconds: 1000),
                 ));
+
+                //** call logIn() api */
                 _logInCreds = LogIn()
-                    .logIn(_usernameController.text, _passwordController.text);
+                    .logIn(_usernameController.text, _passwordController.text)
+                    .then((value) => UserId.userId = value);
 
-                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                // content: Container(child: checkLogIn(),),
-                // duration: Duration(milliseconds: 5000),));
-
-                //log("HERER IS WORK");
-                //log(UserId.userId);
-                _logInCreds.then((result) {
-                  if (result != "") {
-                    UserId.userId = result;
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(UserId.userId),
-                      duration: Duration(milliseconds: 5000),
-                    ));
-                    Navigator.pushNamed(context, '/training');
-                  }
-                });
+                //** log in logic. */
+                if (UserId.userId != "") {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(UserId.userId),
+                    duration: Duration(milliseconds: 5000),
+                  ));
+                  Navigator.pushNamed(context, '/training');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Failed log in"),
+                    duration: Duration(milliseconds: 5000),
+                  ));
+                }
                 //checkLogIn();
               },
               style: ElevatedButton.styleFrom(

@@ -43,8 +43,8 @@ class LoadBalUrl {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      log("API NOT OK");
-      throw Exception('Failed to load photos');
+      log("Lambda not working");
+      throw Exception('Lambda api not working');
     }
 
   }
