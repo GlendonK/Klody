@@ -116,8 +116,9 @@ class LogInFields extends State<LogInFieldsState> {
               // content: Container(child: checkLogIn(),),
               // duration: Duration(milliseconds: 5000),));
 
-              log("HERER IS WORK");
+              //log("HERER IS WORK");
               //log(UserId.userId);
+              //checkLogIn();
 
               if (UserId.userId != "") {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
