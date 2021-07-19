@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:klody/Photos.dart';
 import 'package:klody/dataVisualData.dart';
+import 'package:klody/imageId.dart';
 import 'package:klody/lambdaApi.dart';
 import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/userId.dart';
@@ -30,29 +31,28 @@ class PhotosList {
     }
   }
 
-  // get picture from S3.
-  Future<String> getImages() async {
-    final response = await http.post(Uri.parse('http://'+LoadBlancer.LBUrl+'/getImages'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',});
+  // api to get random iamges for training knn.
+  Future<List> getImages() async {
+    final response = await http.get(Uri.parse('http://'+LoadBlancer.LBUrl+'/getImages'));
+
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       log("getImages: "+response.statusCode.toString());
+
+      var idList = ImageId.fromJson(jsonDecode(response.body));
       
-      return response.body;
+      return idList.nameList;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       log("getImages not working");
-      throw Exception('S3 api not working');
+      throw Exception('getImages api not working');
     }
 
   }
+  
 }
-
-
-
 
 
 class LoadBalUrl {
