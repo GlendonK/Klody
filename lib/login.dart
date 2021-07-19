@@ -15,6 +15,7 @@ class LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Klody"),
       ),
@@ -33,13 +34,6 @@ class LogInPageState extends State<LogInPage> {
               height: 300,
             ),
             LogInFields().build(context),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Navigator.pushNamed(context, '/training');
-            //     },
-            //     style: ElevatedButton.styleFrom(
-            //         primary: Theme.of(context).buttonColor),
-            //     child: Text("To Swipe Page")),
           ],
         ),
       ),
@@ -59,6 +53,24 @@ class LogInFields extends State<LogInFieldsState> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Future<String> _logInCreds;
+
+  // method to call log in api
+  void callLogin(TextEditingController _usernameController,
+      TextEditingController _passwordController) async {
+    //** call logIn() api */
+    _logInCreds = await LogIn()
+        .logIn(_usernameController.text, _passwordController.text)
+        .then((value) {
+      UserId.userId = value;
+
+      // when status 404.
+      if (value == null) {
+        callLogin(_usernameController, _passwordController);
+      }
+      return null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -116,27 +128,23 @@ class LogInFields extends State<LogInFieldsState> {
                   duration: Duration(milliseconds: 1000),
                 ));
 
-                //** call logIn() api */
-                _logInCreds = await LogIn()
-                    .logIn(_usernameController.text, _passwordController.text)
-                    .then((value) {UserId.userId = value; return null;} );
+                // method to call log in api.
+                callLogin(_usernameController, _passwordController);
 
                 //** log in logic. */
                 if (UserId.userId.toString() != "") {
-                  if ( UserId.userId.length > 6) {
+                  if (UserId.userId.length > 6) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(UserId.userId),
-                    duration: Duration(milliseconds: 5000),
-                  ));
-                  Navigator.pushNamed(context, '/training');
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Failed log in"),
-                    duration: Duration(milliseconds: 5000),
-                  ));
-
+                      content: Text(UserId.userId),
+                      duration: Duration(milliseconds: 5000),
+                    ));
+                    Navigator.pushNamed(context, '/training');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Failed log in"),
+                      duration: Duration(milliseconds: 5000),
+                    ));
                   }
-                  
                 }
                 //checkLogIn();
               },
@@ -147,35 +155,4 @@ class LogInFields extends State<LogInFieldsState> {
       ),
     );
   }
-
-  // This is the future builder for log in funciton, to do something if log in susscess or fail
-  // ! check the url if correct.
-  // FutureBuilder<String> checkLogIn() {
-  //   log('HERE IS FUTURE BUILDER');
-  //   return FutureBuilder<String>(
-  //     future: _logInCreds,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasData) {
-  //         // save the user id into static class variable
-  //         UserId.userId = snapshot.data;
-  //         log(snapshot.data.toString());
-
-  //         //Navigator.pushNamed(context, '/training');
-
-  //         return Text(snapshot.data);
-  //       } else if (snapshot.hasError) {
-  //         log(snapshot.error.toString());
-  //         return Text('${snapshot.error}');
-  //       } else if (snapshot.data == "False" || snapshot.data == "false") {
-  //         log(snapshot.data.toString());
-  //         return Text(snapshot.data.toString());
-  //       } else if (!snapshot.hasData) {
-  //         log("NO DATA");
-  //         return Text("log in no data");
-  //       }
-
-  //       return Text("");
-  //     },
-  //   );
-  // }
 }

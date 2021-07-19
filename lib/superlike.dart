@@ -10,14 +10,14 @@ import 'package:klody/webApi.dart';
 import 'super_swipe_page/superSwipeCards.dart';
 
 class SuperLike extends StatefulWidget {
-  final String selectedPic;
+  final List<String> selectedPic;
   SuperLike(this.selectedPic);
   @override
   SuperLikeState createState() => SuperLikeState(this.selectedPic);
 }
 
 class SuperLikeState extends State<SuperLike> {
-  final String selectedPic;
+  final List<String> selectedPic;
   SuperLikeState(this.selectedPic);
   @override
   void initState() {
@@ -54,36 +54,36 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   final selectedPic;
   SuperLikeSwipePhotoState(this.selectedPic);
   Future<List> apiPhoto = PhotosList()
-      .getPhotos(); // api call to get photos id and urls into a list
+      .getImages(); // api call to get photos id and urls into a list
   List<SuperSwipeItem> _swipeItems =
       []; // list to store the photo cards to be swiped
   SuperMatchEngine
       _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<int> id = []; // list to store photo id
-  List<String> pic = []; // list ot store photo url
+  //List<String> id = []; // list to store photo id
+  //List<String> pic = []; // list ot store photo url
 
 //** function to append _swipeItems and initialise match engine */
 
   void load() {
-    for (int i = 0; i < id.length; i++) {
+    for (int i = 0; i < selectedPic.length; i++) {
       _swipeItems.add(SuperSwipeItem(
-        content: PhotoCard(id[i], pic[i]),
+        content: PhotoCard(selectedPic[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+selectedPic[i]),
         likeAction: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Liked ${id[i]}"),
+            content: Text("Liked ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
           ));
-          if (i == id.length - 1) {
+          if (i == selectedPic.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
         },
         nopeAction: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Nope ${id[i]}"),
+            content: Text("Nope ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
           ));
-          if (i == id.length - 1) {
+          if (i == selectedPic.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
         },
@@ -109,11 +109,11 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                   log(snapshot.data[0].pic.toString());
                   //** append id and pic with the id and pic of api */
                   snapshot.data.forEach((element) {
-                    id.add(element.id);
+                    selectedPic.add(element.toString());
                   });
-                  snapshot.data.forEach((element) {
-                    pic.add(element.pic);
-                  });
+                  // snapshot.data.forEach((element) {
+                  //   pic.add(element.pic);
+                  // });
                   load(); // call load to use the id and pic list
                   return SuperSwipeCards(
                     matchEngine: _matchEngine,
@@ -123,7 +123,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                           color: Color(0xFFFFFFFF), // card background color
                           //width: double.infinity,
                           //** fetch image from url and display */
-                          child: Image.network(snapshot.data[index].pic));
+                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+snapshot.data[index].toString()));
                     },
                     onStackFinished: () {
                       log("FINISHED");

@@ -46,21 +46,22 @@ class DailySwipePhotos extends StatefulWidget {
 }
 
 class DailySwipePhotosState extends State<DailySwipePhotos> {
-  Future<List> apiPhoto = PhotosList().getPhotos(); // api call to get photos id and urls into a list
+  Future<List> apiPhoto = PhotosList().getImages(); // api call to get photos id and urls into a list
   List<SwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
   MatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  List<int> id = []; // list to store photo id
-  List<String> pic = []; // list ot store photo url
-  String selectedPic = "";
+  List<String> id = []; // list to store photo id
+  //List<String> pic = []; // list ot store photo url
+  List<String> selectedPic = [];
 
 //** function to append _swipeItems and initialise match engine */  
   
   void load() {
     for (int i = 0; i < id.length; i++) {
       _swipeItems.add(SwipeItem(
-          content: PhotoCard(id[i], pic[i]),
+          content: PhotoCard(id[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+id[i]),
           likeAction: () {
+            CallApi().like(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -73,7 +74,7 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
             ));
           },
           superlikeAction: () {
-            selectedPic = pic[i];
+            selectedPic = CallApi().like(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -101,14 +102,14 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
               future: apiPhoto,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  log(snapshot.data[0].pic.toString());
+                  log(snapshot.data[0]);
                   //** append id and pic with the id and pic of api */
                   snapshot.data.forEach((element) {
-                    id.add(element.id);
+                    id.add(element.toString());
                   });
-                  snapshot.data.forEach((element) {
-                    pic.add(element.pic);
-                  });
+                  // snapshot.data.forEach((element) {
+                  //   pic.add(element.toString());
+                  // });
                   load(); // call load to use the id and pic list
                   return SwipeCards(
                     matchEngine: _matchEngine,
@@ -118,7 +119,7 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
                           color: Color(0xFFFFFFFF), // card background color
                           //width: double.infinity,
                           //** fetch image from url and display */
-                          child: Image.network(snapshot.data[index].pic));
+                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+snapshot.data[index].toString()));
                     },
                     onStackFinished: () {
                       log("FINISHED");
