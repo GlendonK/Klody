@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:klody/Photos.dart';
+import 'package:klody/dataVisualData.dart';
 import 'package:klody/lambdaApi.dart';
 import 'package:klody/trainingSwipePage.dart';
+import 'package:klody/userId.dart';
 
 class PhotosList {
   Future<List> getPhotos() async {
@@ -27,7 +29,30 @@ class PhotosList {
       throw Exception('Failed to load photos');
     }
   }
+
+  // get picture from S3.
+  Future<String> getImages() async {
+    final response = await http.post(Uri.parse('http://'+LoadBlancer.LBUrl+'/getImages'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',});
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      log("getImages: "+response.statusCode.toString());
+      
+      return response.body;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      log("getImages not working");
+      throw Exception('S3 api not working');
+    }
+
+  }
 }
+
+
+
 
 
 class LoadBalUrl {
@@ -89,4 +114,33 @@ class LogIn {
     throw Exception('Failed log in.');
   }
 }
+}
+
+// method to get the data for visualization.
+class DataVisualizationApi {
+  String userRefID = UserId.userId;
+  Future<DataVisualData> clientVisualization() async {
+    final response = await http.post(Uri.parse('http://'+LoadBlancer.LBUrl+'/clientVisualization'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'userRefID': userRefID
+    })
+    );
+
+    var photos = DataVisualData.fromJson(jsonDecode(response.body));
+
+    if (response.statusCode == 201 || response.statusCode ==200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    log("clientVisualization:"+response.statusCode.toString());
+    return photos;
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    log("clientVisualization:"+response.statusCode.toString());
+    throw Exception('Failed clientVisualization.');
+  }
+  }
 }

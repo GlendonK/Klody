@@ -107,7 +107,8 @@ class LogInFields extends State<LogInFieldsState> {
             ),
           ),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                //UserId.userId = "" ;
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(_usernameController.text +
                       " " +
@@ -116,13 +117,14 @@ class LogInFields extends State<LogInFieldsState> {
                 ));
 
                 //** call logIn() api */
-                _logInCreds = LogIn()
+                _logInCreds = await LogIn()
                     .logIn(_usernameController.text, _passwordController.text)
-                    .then((value) => UserId.userId = value);
+                    .then((value) {UserId.userId = value; return null;} );
 
                 //** log in logic. */
-                if (UserId.userId != "") {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                if (UserId.userId.toString() != "") {
+                  if ( UserId.userId.length > 6) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(UserId.userId),
                     duration: Duration(milliseconds: 5000),
                   ));
@@ -132,6 +134,9 @@ class LogInFields extends State<LogInFieldsState> {
                     content: Text("Failed log in"),
                     duration: Duration(milliseconds: 5000),
                   ));
+
+                  }
+                  
                 }
                 //checkLogIn();
               },
