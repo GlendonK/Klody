@@ -29,7 +29,9 @@ class PhotosList {
   }
 }
 
+
 class LoadBalUrl {
+  // this method to get the load balancer ip from lambda
   Future<String> getLoadBalUrl() async {
     final response = await http.get(Uri.parse('https://hpcztlgxm0.execute-api.us-east-2.amazonaws.com/default/getlb'));
     if (response.statusCode == 200) {
@@ -48,51 +50,16 @@ class LoadBalUrl {
   }
 }
 
-// class LoadBal {
-// FutureBuilder<String> getLBUrl() {
-//     return FutureBuilder<String>(
-//       future: LoadBalUrl().getLoadBalUrl(),
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           Lambda.LBUrl = Text(snapshot.data).data;
-//           return Text(snapshot.data);
-//         } else if (snapshot.hasError) {
-//           return Text('${snapshot.error}');
-//         }
-//         return Text("");
-//       },
-//     );
-//   }
-// }
-
-// /http://18.216.210.137/login
 
 class LogIn {
-
-  
-
-  // FutureBuilder<String> getLBUrl() {
-  //   return FutureBuilder<String>(
-  //     future: LoadBalUrl().getLoadBalUrl(),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasData) {
-  //         LoadBlancer.LBUrl = Text(snapshot.data).data;
-  //         return Text(snapshot.data);
-  //       } else if (snapshot.hasError) {
-  //         return Text('${snapshot.error}');
-  //       }
-  //       return Text("");
-  //     },
-  //   );
-  // }
-
+  //**method to log in. will also call the lambda api to get the load balancer ip address. */
   Future<String> logIn(String username, String password) async {
     
     //FutureBuilder<String> lBUrl = getLBUrl();
     String loadBalancerIp = "";
     await LoadBalUrl().getLoadBalUrl().then((result){loadBalancerIp = result.toString();});
     loadBalancerIp = loadBalancerIp.replaceAll('"','');
-    LoadBlancer().setLBUrl(loadBalancerIp);
+    LoadBlancer.LBUrl = loadBalancerIp;
 
     log("Calling logIn.");
     log( "ip:"+loadBalancerIp+" " + LoadBlancer.LBUrl);

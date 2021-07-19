@@ -23,10 +23,12 @@ class LogInPageState extends State<LogInPage> {
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-              child: ClipOval(child: Image.asset(
-                'assets/images/background.jpg',
-                fit: BoxFit.fill,
-              ),),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/background.jpg',
+                  fit: BoxFit.fill,
+                ),
+              ),
               width: 300,
               height: 300,
             ),
@@ -69,7 +71,7 @@ class LogInFields extends State<LogInFieldsState> {
             child: SizedBox(
               width: 300,
               child: TextFormField(
-                controller: _usernameController,
+                  controller: _usernameController,
                   decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -89,7 +91,7 @@ class LogInFields extends State<LogInFieldsState> {
             child: SizedBox(
               width: 300,
               child: TextFormField(
-                controller: _passwordController,
+                  controller: _passwordController,
                   decoration: InputDecoration(
                       isDense: true,
                       contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -105,31 +107,37 @@ class LogInFields extends State<LogInFieldsState> {
             ),
           ),
           ElevatedButton(
-
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(_usernameController.text +" " + _passwordController.text),
-              duration: Duration(milliseconds: 1000),));
-              _logInCreds = LogIn().logIn(_usernameController.text, _passwordController.text);
-
-              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              // content: Container(child: checkLogIn(),),
-              // duration: Duration(milliseconds: 5000),));
-
-              //log("HERER IS WORK");
-              //log(UserId.userId);
-              //checkLogIn();
-
-              if (UserId.userId != "") {
+              onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(UserId.userId),
-              duration: Duration(milliseconds: 5000),));
-                Navigator.pushNamed(context, '/training');
-              }
-                },
-                style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).buttonColor),
-                child: Text("Log In")),
+                  content: Text(_usernameController.text +
+                      " " +
+                      _passwordController.text),
+                  duration: Duration(milliseconds: 1000),
+                ));
+                _logInCreds = LogIn()
+                    .logIn(_usernameController.text, _passwordController.text);
+
+                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                // content: Container(child: checkLogIn(),),
+                // duration: Duration(milliseconds: 5000),));
+
+                //log("HERER IS WORK");
+                //log(UserId.userId);
+                _logInCreds.then((result) {
+                  if (result != "") {
+                    UserId.userId = result;
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(UserId.userId),
+                      duration: Duration(milliseconds: 5000),
+                    ));
+                    Navigator.pushNamed(context, '/training');
+                  }
+                });
+                //checkLogIn();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).buttonColor),
+              child: Text("Log In")),
         ],
       ),
     );
@@ -137,32 +145,32 @@ class LogInFields extends State<LogInFieldsState> {
 
   // This is the future builder for log in funciton, to do something if log in susscess or fail
   // ! check the url if correct.
-  FutureBuilder<String> checkLogIn() {
-    log('HERE IS FUTURE BUILDER');
-    return FutureBuilder<String>(
-      future: _logInCreds,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          // save the user id into static class variable
-          UserId.userId = snapshot.data;
-          log(snapshot.data.toString());
-          
-          //Navigator.pushNamed(context, '/training');
-        
-          return Text(snapshot.data);
-        } else if (snapshot.hasError) {
-          log(snapshot.error.toString());
-          return Text('${snapshot.error}');
-        } else if (snapshot.data == "False" || snapshot.data == "false") {
-          log(snapshot.data.toString());
-          return Text(snapshot.data.toString());
-        } else if (!snapshot.hasData) {
-          log("NO DATA");
-          return Text("log in no data");
-        }
+  // FutureBuilder<String> checkLogIn() {
+  //   log('HERE IS FUTURE BUILDER');
+  //   return FutureBuilder<String>(
+  //     future: _logInCreds,
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasData) {
+  //         // save the user id into static class variable
+  //         UserId.userId = snapshot.data;
+  //         log(snapshot.data.toString());
 
-        return Text("");
-      },
-    );
-  }
+  //         //Navigator.pushNamed(context, '/training');
+
+  //         return Text(snapshot.data);
+  //       } else if (snapshot.hasError) {
+  //         log(snapshot.error.toString());
+  //         return Text('${snapshot.error}');
+  //       } else if (snapshot.data == "False" || snapshot.data == "false") {
+  //         log(snapshot.data.toString());
+  //         return Text(snapshot.data.toString());
+  //       } else if (!snapshot.hasData) {
+  //         log("NO DATA");
+  //         return Text("log in no data");
+  //       }
+
+  //       return Text("");
+  //     },
+  //   );
+  // }
 }
