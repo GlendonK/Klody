@@ -53,7 +53,7 @@ class SuperLikeSwipePhotos extends StatefulWidget {
 class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   List<String> selectedPic = [];
   SuperLikeSwipePhotoState(this.selectedPic);
-  Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id into a list
+  Future<List> apiPhoto = PhotosList().getImages(); // api call to get photos id into a list
 
   List<SuperSwipeItem> _swipeItems = []; // list to store the photo cards to be swiped
   SuperMatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
@@ -68,7 +68,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
       _swipeItems.add(SuperSwipeItem(
         content: PhotoCard(selectedPic[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+selectedPic[i]),
         likeAction: () {
-          CallApi().like(selectedPic[i]);
+          PhotosList().swipe(selectedPic[i]);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Liked ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
@@ -110,7 +110,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                   snapshot.data.forEach((element) {
                     log("superLike have data:" + element.toString());
 
-                    selectedPic.add("element.toString()");
+                    selectedPic.add(element.toString());
 
                     log("selectedPic have data:" + selectedPic[0]);
                   });
@@ -131,7 +131,9 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                     },
                   );
                 } else if (!snapshot.hasData) {
-                  return Text("NO DATA");
+                  return Center(heightFactor: 100,
+                  widthFactor: 100,
+                    child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   log(snapshot.error.toString());
                   log("${snapshot.error}");

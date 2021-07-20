@@ -46,7 +46,7 @@ class DailySwipePhotos extends StatefulWidget {
 }
 
 class DailySwipePhotosState extends State<DailySwipePhotos> {
-  Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id and urls into a list
+  Future<List> apiPhoto = PhotosList().dailyPicks(); // api call to get photos id and urls into a list
   List<SwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
   MatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -63,7 +63,7 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
       _swipeItems.add(SwipeItem(
           content: PhotoCard(id[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+id[i]),
           likeAction: () {
-            CallApi().like(id[i]);
+            PhotosList().swipe(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -75,8 +75,8 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
               duration: Duration(milliseconds: 500),
             ));
           },
-          superlikeAction: () {
-            selectedPic = CallApi().like(id[i]);
+          superlikeAction: () async {
+            selectedPic = await PhotosList().swipe(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),

@@ -63,10 +63,12 @@ class LogInFields extends State<LogInFieldsState> {
         .then((value) {
       UserId.userId = value;
 
+      log(UserId.userId + " + " + value.toString());
+
       // when status 404.
-      if (value == null || value == "") {
-        log("valie:" +value);
-        callLogin(_usernameController, _passwordController);
+      if (value == null || value.toString() == "null") {
+        log("valie:");
+        //callLogin(_usernameController, _passwordController);
       }
       return null;
     });
@@ -132,6 +134,8 @@ class LogInFields extends State<LogInFieldsState> {
                 // method to call log in api.
                 await callLogin(_usernameController, _passwordController);
 
+                log("user id:" + UserId.userId);
+
                 //** log in logic. */
                 if (UserId.userId.toString() != "") {
                   if (UserId.userId.length > 6) {
@@ -140,9 +144,14 @@ class LogInFields extends State<LogInFieldsState> {
                       duration: Duration(milliseconds: 5000),
                     ));
                     Navigator.pushNamed(context, '/training');
+                  } else if (UserId.userId == "{false}") {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Wrong Credentials"),
+                      duration: Duration(milliseconds: 5000),
+                    ));
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Failed log in"),
+                      content: Text("Failed log in."),
                       duration: Duration(milliseconds: 5000),
                     ));
                   }

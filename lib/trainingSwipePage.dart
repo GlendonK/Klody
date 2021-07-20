@@ -92,7 +92,7 @@ class SwipePhotoState extends State<SwipePhotos> {
       _swipeItems.add(SwipeItem(
           content: PhotoCard(id[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+id[i]),
           likeAction: () {
-            CallApi().like(id[i]);
+            PhotosList().swipe(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -111,7 +111,7 @@ class SwipePhotoState extends State<SwipePhotos> {
           }
           },
           superlikeAction: () async {
-            selectedPic = await CallApi().like(id[i]);
+            selectedPic = await PhotosList().swipe(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
@@ -163,6 +163,10 @@ class SwipePhotoState extends State<SwipePhotos> {
                       log("FINISHED");
                     },
                   );
+                } else if (!snapshot.hasData) {
+                  return Center(heightFactor: 100,
+                  widthFactor: 100,
+                    child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   log(snapshot.error.toString());
                   log("${snapshot.error}");

@@ -47,7 +47,7 @@ class PhotosList {
       return idList.nameList;
     } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
-      return null;
+      return getImages();
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -56,6 +56,42 @@ class PhotosList {
     }
   }
 
+  // get daily pick photos 
+   Future<List> dailyPicks() async {
+          var now = DateTime.now();
+      var year = now.toLocal().year;
+      var month = now.toLocal().month;
+      var day = now.toLocal().day;
+      var nowTimeFormated = year.toString() + "-" +month.toString() + "-" + day.toString();
+      log(now.toLocal().toString());
+      log(nowTimeFormated.toString());
+    final response =
+        await http.post(Uri.parse('http://' + LoadBlancer.LBUrl + '/dailypicks'),headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            <String, String>{'userRefID': UserId.userId, 'date': nowTimeFormated}));
+
+    if (response.statusCode == 200 || response.statusCode == 201 ) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      log("dailyPicks: " + response.statusCode.toString());
+
+      var idList = ImageId.fromJson(jsonDecode(response.body));
+
+      return idList.nameList;
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
+      await LoadBalUrl().getLoadBalUrl();
+      return getImages();
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      log("dailyPicks not working");
+      throw Exception('dailyPicks api not working');
+    }
+  }
+
+  // api to send the photo id u liked
   Future<List> swipe(String photoId) async {
     final response = await http.post(
         Uri.parse('http://' + LoadBlancer.LBUrl + "/swipe"),
@@ -72,10 +108,12 @@ class PhotosList {
 
       var photos = DailyPics.fromJson(jsonDecode(response.body));
 
+
+
       return photos.result;
     } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
-      return null;
+      return swipe(photoId);
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
@@ -98,6 +136,7 @@ class CallPhotoApi {
   }
 }
 
+// method to call the sipe
 class CallApi {
   List like(String photoId)  {
     List res;
@@ -164,8 +203,12 @@ class LogIn {
       // then parse the JSON.
       log("logIn:" + response.statusCode.toString());
       return response.body;
-    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
+    } else if (response.statusCode != 200 || response.statusCode != 201) {
+      
       log("logIn:" + response.statusCode.toString());
+      
+
+      var sleep = Future.delayed(Duration(seconds: 1), () => "1");
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {
@@ -197,7 +240,7 @@ class DataVisualizationApi {
       return photos;
     } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503 || response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
-      return null;
+      return clientVisualization();
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
