@@ -9,15 +9,6 @@ import 'package:klody/imageId.dart';
 import 'package:klody/lambdaApi.dart';
 import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/userId.dart';
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
-// TODO: the fallback method to call lambda and get new ip address if 404.
 
 class PhotosList {
   // Future<List> getPhotos() async {
@@ -54,7 +45,7 @@ class PhotosList {
       var idList = ImageId.fromJson(jsonDecode(response.body));
 
       return idList.nameList;
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {
@@ -82,7 +73,7 @@ class PhotosList {
       var photos = DailyPics.fromJson(jsonDecode(response.body));
 
       return photos.result;
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {
@@ -108,7 +99,7 @@ class CallPhotoApi {
 }
 
 class CallApi {
-  List like(String photoId) {
+  List like(String photoId)  {
     List res;
     PhotosList().swipe(photoId).then((value) => res = value);
     return res;
@@ -132,7 +123,7 @@ class LoadBalUrl {
       LoadBlancer.LBUrl = loadBalancerIp;
 
       return response.body;
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {
@@ -173,7 +164,8 @@ class LogIn {
       // then parse the JSON.
       log("logIn:" + response.statusCode.toString());
       return response.body;
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
+      log("logIn:" + response.statusCode.toString());
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {
@@ -203,7 +195,7 @@ class DataVisualizationApi {
       // then parse the JSON.
       log("clientVisualization:" + response.statusCode.toString());
       return photos;
-    } else if (response.statusCode == 404) {
+    } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503 || response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
       return null;
     } else {

@@ -46,7 +46,7 @@ class DailySwipePhotos extends StatefulWidget {
 }
 
 class DailySwipePhotosState extends State<DailySwipePhotos> {
-  Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id into a list
+  Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id and urls into a list
   List<SwipeItem> _swipeItems = []; // list to store the photo cards to be swiped 
   MatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -173,3 +173,15 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
   }
 }
 
+class CallPhotoApi {
+  Future<List> callPhotoApi() async {
+    List photoId = [];
+    photoId = await PhotosList().getImages();
+    if (photoId != null || photoId != []) {
+      return photoId;
+    } else if (photoId == [] || photoId == null) {
+      callPhotoApi();
+    }
+    return photoId;
+  }
+}

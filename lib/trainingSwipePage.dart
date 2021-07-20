@@ -58,7 +58,7 @@ class SwipePhotoState extends State<SwipePhotos> {
 
 //** function to append _swipeItems and initialise match engine */  
   
-  void load() {
+  void load() async {
     // id.forEach((element) { 
     //   _swipeItems.add(SwipeItem(
     //       content: PhotoCard(element, " /"+element),
@@ -97,20 +97,26 @@ class SwipePhotoState extends State<SwipePhotos> {
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            if (i == id.length - 1) {
+            Navigator.pushReplacementNamed(context, '/training');
+          }
           },
           nopeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Nope ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            if (i == id.length - 1) {
+            Navigator.pushReplacementNamed(context, '/training');
+          }
           },
-          superlikeAction: () {
-            selectedPic = CallApi().like(id[i]);
+          superlikeAction: () async {
+            selectedPic = await CallApi().like(id[i]);
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
-            Navigator.push(
+            Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                     builder: (context) => SuperLike(selectedPic)));

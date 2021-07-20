@@ -5,18 +5,7 @@ import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/graphPage.dart';
 
 import 'appTheme.dart';
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
-// TODO: the fallback method to call lambda and get new ip address if 404. log in implemented only
+
 void main() {
   runApp(MyApp());
 }

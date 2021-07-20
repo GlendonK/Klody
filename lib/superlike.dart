@@ -10,14 +10,14 @@ import 'package:klody/webApi.dart';
 import 'super_swipe_page/superSwipeCards.dart';
 
 class SuperLike extends StatefulWidget {
-  final List<String> selectedPic;
+  List<String> selectedPic = [];
   SuperLike(this.selectedPic);
   @override
-  SuperLikeState createState() => SuperLikeState(this.selectedPic);
+  SuperLikeState createState() => SuperLikeState(this.selectedPic = []);
 }
 
 class SuperLikeState extends State<SuperLike> {
-  final List<String> selectedPic;
+  List<String> selectedPic = [];
   SuperLikeState(this.selectedPic);
   @override
   void initState() {
@@ -33,7 +33,7 @@ class SuperLikeState extends State<SuperLike> {
       ),
       body: Center(
         child: Column(
-          children: [SuperLikeSwipePhotos(this.selectedPic)],
+          children: [SuperLikeSwipePhotos(this.selectedPic = [])],
         ),
       ),
       bottomNavigationBar: BottomNavBar(indexTab: 0),
@@ -42,16 +42,16 @@ class SuperLikeState extends State<SuperLike> {
 }
 
 class SuperLikeSwipePhotos extends StatefulWidget {
-  final selectedPic;
+  List<String> selectedPic = [];
   SuperLikeSwipePhotos(this.selectedPic);
   @override
   SuperLikeSwipePhotoState createState() {
-    return SuperLikeSwipePhotoState(this.selectedPic);
+    return SuperLikeSwipePhotoState(this.selectedPic = []);
   }
 }
 
 class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
-  final selectedPic;
+  List<String> selectedPic = [];
   SuperLikeSwipePhotoState(this.selectedPic);
   Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id into a list
 
@@ -105,14 +105,16 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
               future: apiPhoto,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  log(snapshot.data[0].pic.toString());
+                  log(snapshot.data[0].toString());
                   //** append id and pic with the id and pic of api */
                   snapshot.data.forEach((element) {
-                    selectedPic.add(element.toString());
+                    log("superLike have data:" + element.toString());
+
+                    selectedPic.add("element.toString()");
+
+                    log("selectedPic have data:" + selectedPic[0]);
                   });
-                  // snapshot.data.forEach((element) {
-                  //   pic.add(element.pic);
-                  // });
+                  
                   load(); // call load to use the id and pic list
                   return SuperSwipeCards(
                     matchEngine: _matchEngine,
@@ -128,6 +130,8 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                       log("FINISHED");
                     },
                   );
+                } else if (!snapshot.hasData) {
+                  return Text("NO DATA");
                 } else if (snapshot.hasError) {
                   log(snapshot.error.toString());
                   log("${snapshot.error}");

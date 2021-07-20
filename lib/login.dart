@@ -55,7 +55,7 @@ class LogInFields extends State<LogInFieldsState> {
   Future<String> _logInCreds;
 
   // method to call log in api
-  void callLogin(TextEditingController _usernameController,
+  Future callLogin(TextEditingController _usernameController,
       TextEditingController _passwordController) async {
     //** call logIn() api */
     _logInCreds = await LogIn()
@@ -64,7 +64,8 @@ class LogInFields extends State<LogInFieldsState> {
       UserId.userId = value;
 
       // when status 404.
-      if (value == null) {
+      if (value == null || value == "") {
+        log("valie:" +value);
         callLogin(_usernameController, _passwordController);
       }
       return null;
@@ -129,7 +130,7 @@ class LogInFields extends State<LogInFieldsState> {
                 ));
 
                 // method to call log in api.
-                callLogin(_usernameController, _passwordController);
+                await callLogin(_usernameController, _passwordController);
 
                 //** log in logic. */
                 if (UserId.userId.toString() != "") {
