@@ -94,6 +94,19 @@ class PhotosList {
   }
 }
 
+class CallPhotoApi {
+  Future<List> callPhotoApi() async {
+    List photoId = [];
+    photoId = await PhotosList().getImages();
+    if (photoId != null || photoId != []) {
+      return photoId;
+    } else if (photoId == [] || photoId == null) {
+      callPhotoApi();
+    }
+    return photoId;
+  }
+}
+
 class CallApi {
   List like(String photoId) {
     List res;

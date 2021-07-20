@@ -53,12 +53,10 @@ class SuperLikeSwipePhotos extends StatefulWidget {
 class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
   final selectedPic;
   SuperLikeSwipePhotoState(this.selectedPic);
-  Future<List> apiPhoto = PhotosList()
-      .getImages(); // api call to get photos id and urls into a list
-  List<SuperSwipeItem> _swipeItems =
-      []; // list to store the photo cards to be swiped
-  SuperMatchEngine
-      _matchEngine; // to match the swiped photos to the index thus actions of swipe
+  Future<List> apiPhoto = CallPhotoApi().callPhotoApi(); // api call to get photos id into a list
+
+  List<SuperSwipeItem> _swipeItems = []; // list to store the photo cards to be swiped
+  SuperMatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   //List<String> id = []; // list to store photo id
   //List<String> pic = []; // list ot store photo url
@@ -70,6 +68,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
       _swipeItems.add(SuperSwipeItem(
         content: PhotoCard(selectedPic[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+selectedPic[i]),
         likeAction: () {
+          CallApi().like(selectedPic[i]);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Liked ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
