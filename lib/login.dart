@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/userId.dart';
 import 'package:klody/webApi.dart';
 

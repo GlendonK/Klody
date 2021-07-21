@@ -11,26 +11,6 @@ import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/userId.dart';
 
 class PhotosList {
-  // Future<List> getPhotos() async {
-  //   final response =
-  //       await http.get(Uri.parse('https://glendonk.github.io/data.json'));
-
-  //   if (response.statusCode == 200) {
-  //     // If the server did return a 200 OK response,
-  //     // then parse the JSON.
-  //     log(response.statusCode.toString());
-
-  //     var photos = ApiPhotos.fromJson(jsonDecode(response.body));
-
-  //     log(photos.toString());
-  //     return photos.data;
-  //   } else {
-  //     // If the server did not return a 200 OK response,
-  //     // then throw an exception.
-  //     log("API NOT OK");
-  //     throw Exception('Failed to load photos');
-  //   }
-  // }
 
   // api to get random iamges id for training knn.
   Future<List> getImages() async {
@@ -132,27 +112,6 @@ class PhotosList {
   }
 }
 
-class CallPhotoApi {
-  Future<List> callPhotoApi() async {
-    List photoId = [];
-    photoId = await PhotosList().getImages();
-    if (photoId != null || photoId != []) {
-      return photoId;
-    } else if (photoId == [] || photoId == null) {
-      callPhotoApi();
-    }
-    return photoId;
-  }
-}
-
-// method to call the sipe
-class CallApi {
-  List like(String photoId)  {
-    List res;
-    PhotosList().swipe(photoId).then((value) => res = value);
-    return res;
-  }
-}
 
 class LoadBalUrl {
   // this method to get the load balancer ip from lambda
@@ -186,19 +145,12 @@ class LoadBalUrl {
 class LogIn {
   //**method to log in. will also call the lambda api to get the load balancer ip address. */
   Future<String> logIn(String username, String password) async {
-    //FutureBuilder<String> lBUrl = getLBUrl();
-    //String loadBalancerIp = "";
-    //await LoadBalUrl().getLoadBalUrl().then((result){loadBalancerIp = result.toString();});
-    // loadBalancerIp = loadBalancerIp.replaceAll('"','');
-    // LoadBlancer.LBUrl = loadBalancerIp;
 
     await LoadBalUrl().getLoadBalUrl();
     log("Calling logIn.");
     log("ip:" + LoadBlancer.LBUrl);
     //log("LoadBlancer.LBUrl:"+ loadBalancerIp + " " + LoadBlancer().getLBUrl() + "End");
     final response = await http.post(
-      //! check to change the url to correct one.
-
       Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -219,9 +171,9 @@ class LogIn {
       log("logIn:" + response.statusCode.toString());
       
 
-      var sleep = Future.delayed(Duration(seconds: 1), () => "1");
+      var sleep = Future.delayed(Duration(seconds: 1));
       await LoadBalUrl().getLoadBalUrl();
-      return logIn(username, password);
+      return null;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.

@@ -1,5 +1,7 @@
-# klody
+# kloudy
 
-A new Flutter project.
+CSC 3004 Cloud and Distributed Computing
 
-# TODO: graph visualisations, the post api, the correct get api, 1 reccomended swipe page. 
+## The front end mobile app for kloudy dating app. </br>
+### - clone this repo, cd into /khlody.
+### - use command flutter run. Choose chrome browser.

@@ -60,35 +60,7 @@ class SwipePhotoState extends State<SwipePhotos> {
 //** function to append _swipeItems and initialise match engine */  
   
   void load() async {
-    // id.forEach((element) { 
-    //   _swipeItems.add(SwipeItem(
-    //       content: PhotoCard(element, " /"+element),
-    //       likeAction: () {
-    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //           content: Text("Liked ${element}"),
-    //           duration: Duration(milliseconds: 500),
-    //         ));
-    //       },
-    //       nopeAction: () {
-    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //           content: Text("Nope ${element}"),
-    //           duration: Duration(milliseconds: 500),
-    //         ));
-    //       },
-    //       superlikeAction: () {
-    //         selectedPic = " /"+element;
-    //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //           content: Text("Superliked ${element}"),
-    //           duration: Duration(milliseconds: 500),
-    //         ));
-    //         Navigator.push(
-    //                 context,
-    //                 MaterialPageRoute(
-    //                 builder: (context) => SuperLike(selectedPic)));
-    //       }));
-    // });
-    // _matchEngine = MatchEngine(swipeItems: _swipeItems);
-
+    
     for (int i = 0; i < id.length; i++) {
       _swipeItems.add(SwipeItem(
           content: PhotoCard(id[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+id[i]),
