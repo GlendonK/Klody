@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/photoCard.dart';
+import 'package:klody/userId.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/superLike.dart';
@@ -97,6 +98,8 @@ class SwipePhotoState extends State<SwipePhotos> {
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+
+            log("Liked ${id[i]}");
             if (i == id.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
@@ -106,16 +109,23 @@ class SwipePhotoState extends State<SwipePhotos> {
               content: Text("Nope ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+
+            log("Noped ${id[i]}");
             if (i == id.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
           },
           superlikeAction: () async {
             selectedPic = await PhotosList().swipe(id[i]);
+
+            UserId.superLike = id[i];
+
+            log("Length of selectedPic sending to SuperLike : " + selectedPic.length.toString());
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            log("Super Like ${id[i]}");
             Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

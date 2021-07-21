@@ -17,7 +17,7 @@ class LogInPageState extends State<LogInPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("Klody"),
+        title: Text("Kloudy"),
       ),
       body: Center(
         child: Column(

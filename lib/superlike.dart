@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/photoCard.dart';
+import 'package:klody/userId.dart';
 import 'package:klody/webApi.dart';
 
 import 'super_swipe_page/superSwipeCards.dart';
 
 class SuperLike extends StatefulWidget {
-  List<String> selectedPic = [];
+  final List<String> selectedPic;
   SuperLike(this.selectedPic);
   @override
-  SuperLikeState createState() => SuperLikeState(this.selectedPic = []);
+  SuperLikeState createState() => SuperLikeState(this.selectedPic);
 }
 
 class SuperLikeState extends State<SuperLike> {
-  List<String> selectedPic = [];
+  final List<String> selectedPic;
   SuperLikeState(this.selectedPic);
   @override
   void initState() {
@@ -33,7 +34,7 @@ class SuperLikeState extends State<SuperLike> {
       ),
       body: Center(
         child: Column(
-          children: [SuperLikeSwipePhotos(this.selectedPic = [])],
+          children: [SuperLikeSwipePhotos(this.selectedPic)],
         ),
       ),
       bottomNavigationBar: BottomNavBar(indexTab: 0),
@@ -42,18 +43,18 @@ class SuperLikeState extends State<SuperLike> {
 }
 
 class SuperLikeSwipePhotos extends StatefulWidget {
-  List<String> selectedPic = [];
+  final List<String> selectedPic;
   SuperLikeSwipePhotos(this.selectedPic);
   @override
   SuperLikeSwipePhotoState createState() {
-    return SuperLikeSwipePhotoState(this.selectedPic = []);
+    return SuperLikeSwipePhotoState(this.selectedPic);
   }
 }
 
 class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
-  List<String> selectedPic = [];
+  final List<String> selectedPic;
   SuperLikeSwipePhotoState(this.selectedPic);
-  Future<List> apiPhoto = PhotosList().getImages(); // api call to get photos id into a list
+  Future<List> apiPhoto = PhotosList().swipe(UserId.superLike); // api call to get photos id into a list
 
   List<SuperSwipeItem> _swipeItems = []; // list to store the photo cards to be swiped
   SuperMatchEngine _matchEngine; // to match the swiped photos to the index thus actions of swipe
@@ -64,6 +65,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
 //** function to append _swipeItems and initialise match engine */
 
   void load() {
+    log("load()");
     for (int i = 0; i < selectedPic.length; i++) {
       _swipeItems.add(SuperSwipeItem(
         content: PhotoCard(selectedPic[i], "https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+selectedPic[i]),
@@ -73,6 +75,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
             content: Text("Liked ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
           ));
+          log("Liked ${selectedPic[i]}");
           if (i == selectedPic.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
@@ -82,6 +85,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
             content: Text("Nope ${selectedPic[i]}"),
             duration: Duration(milliseconds: 500),
           ));
+          log("Noped ${selectedPic[i]}");
           if (i == selectedPic.length - 1) {
             Navigator.pushReplacementNamed(context, '/training');
           }
@@ -108,11 +112,13 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                   log(snapshot.data[0].toString());
                   //** append id and pic with the id and pic of api */
                   snapshot.data.forEach((element) {
-                    log("superLike have data:" + element.toString());
+                    //log("superLike have data:" + element.toString());
 
-                    selectedPic.add(element.toString());
+                    //selectedPic.add(element.toString());
+                    log("size:"+snapshot.data.length.toString());
+                    log("size2:"+selectedPic.length.toString());
 
-                    log("selectedPic have data:" + selectedPic[0]);
+                    //log("selectedPic have data:" + selectedPic[0]);
                   });
                   
                   load(); // call load to use the id and pic list
@@ -124,7 +130,7 @@ class SuperLikeSwipePhotoState extends State<SuperLikeSwipePhotos> {
                           color: Color(0xFFFFFFFF), // card background color
                           //width: double.infinity,
                           //** fetch image from url and display */
-                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+snapshot.data[index].toString()));
+                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+selectedPic[index].toString()));
                     },
                     onStackFinished: () {
                       log("FINISHED");

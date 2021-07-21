@@ -6,6 +6,15 @@ import 'package:klody/graphPage.dart';
 
 import 'appTheme.dart';
 
+
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
+// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
 void main() {
   runApp(MyApp());
 }
@@ -20,7 +29,7 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        title: "Khlody",
+        title: "Khloudy",
         theme: ThemeData(
           primaryColor: Color(KhlodyTheme.primaryTheme),
           buttonColor: Color(KhlodyTheme.superLikeColor),

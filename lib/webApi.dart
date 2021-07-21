@@ -35,7 +35,10 @@ class PhotosList {
   // api to get random iamges id for training knn.
   Future<List> getImages() async {
     final response =
-        await http.get(Uri.parse('http://' + LoadBlancer.LBUrl + '/getImages'));
+        await http.get(Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_getImages'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*"});
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
@@ -66,8 +69,10 @@ class PhotosList {
       log(now.toLocal().toString());
       log(nowTimeFormated.toString());
     final response =
-        await http.post(Uri.parse('http://' + LoadBlancer.LBUrl + '/dailypicks'),headers: <String, String>{
+        await http.post(Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_dailypicks'),headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*"
         },
         body: jsonEncode(
             <String, String>{'userRefID': UserId.userId, 'date': nowTimeFormated}));
@@ -77,12 +82,14 @@ class PhotosList {
       // then parse the JSON.
       log("dailyPicks: " + response.statusCode.toString());
 
-      var idList = ImageId.fromJson(jsonDecode(response.body));
+      var idList = DailyPics2.fromJson(jsonDecode(response.body));
 
-      return idList.nameList;
+      log(idList.toString());
+
+      return idList.results;
     } else if (response.statusCode == 500 || response.statusCode == 501 || response.statusCode == 502 || response.statusCode == 503|| response.statusCode == 404) {
       await LoadBalUrl().getLoadBalUrl();
-      return getImages();
+      return dailyPicks();
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -94,9 +101,11 @@ class PhotosList {
   // api to send the photo id u liked
   Future<List> swipe(String photoId) async {
     final response = await http.post(
-        Uri.parse('http://' + LoadBlancer.LBUrl + "/swipe"),
+        Uri.parse('http://' + LoadBlancer.LBUrl + "/lb_swipe"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*"
         },
         body: jsonEncode(
             <String, String>{'userRefID': UserId.userId, 'photoID': photoId}));
@@ -190,9 +199,11 @@ class LogIn {
     final response = await http.post(
       //! check to change the url to correct one.
 
-      Uri.parse('http://' + LoadBlancer.LBUrl + '/login'),
+      Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*"
       },
       body: jsonEncode(
           <String, String>{'username': username, 'password': password}),
@@ -210,7 +221,7 @@ class LogIn {
 
       var sleep = Future.delayed(Duration(seconds: 1), () => "1");
       await LoadBalUrl().getLoadBalUrl();
-      return null;
+      return logIn(username, password);
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
@@ -225,9 +236,11 @@ class DataVisualizationApi {
   String userRefID = UserId.userId;
   Future<DataVisualData> clientVisualization() async {
     final response = await http.post(
-        Uri.parse('http://' + LoadBlancer.LBUrl + '/clientVisualization'),
+        Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_clientVisualization'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          "Accept": "application/json",
+          "Access-Control-Allow-Origin": "*"
         },
         body: jsonEncode(<String, String>{'userRefID': userRefID}));
 

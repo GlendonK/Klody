@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/photoCard.dart';
+import 'package:klody/userId.dart';
 import 'package:klody/webApi.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:klody/superLike.dart';
@@ -68,12 +69,14 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
               content: Text("Liked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            log("Liked ${id[i]}");
           },
           nopeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Nope ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            log("Noped ${id[i]}");
           },
           superlikeAction: () async {
             selectedPic = await PhotosList().swipe(id[i]);
@@ -81,6 +84,8 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
               content: Text("Superliked ${id[i]}"),
               duration: Duration(milliseconds: 500),
             ));
+            log("Super Like ${id[i]}");
+            UserId.superLike = id[i];
             Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -121,7 +126,7 @@ class DailySwipePhotosState extends State<DailySwipePhotos> {
                           color: Color(0xFFFFFFFF), // card background color
                           //width: double.infinity,
                           //** fetch image from url and display */
-                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+snapshot.data[index].toString()));
+                          child: Image.network("https://celeba3004.s3.us-east-2.amazonaws.com/10k_girls/"+id[index].toString()));
                     },
                     onStackFinished: () {
                       log("FINISHED");
