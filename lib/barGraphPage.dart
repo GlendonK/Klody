@@ -83,6 +83,7 @@ class BarChartSample4State extends State<BarChartSample4> {
         _mediaQueryData.padding.bottom;
     safeBlockHorizontal = (screenWidth - _safeAreaHorizontal)/100;
     safeBlockVertical = (screenHeight - _safeAreaVertical)/100;
+    
     return Expanded(
       child: Container(
         width: double.infinity,
