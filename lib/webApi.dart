@@ -15,7 +15,7 @@ class PhotosList {
   // api to get random iamges id for training knn.
   Future<List> getImages() async {
     final response =
-        await http.get(Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_getImages'),
+        await http.get(Uri.parse('http://' + LoadBlancer.LBUrl + '/getImages'),
         headers: {'Content-Type': 'application/json; charset=UTF-8',
           "Accept": "application/json",
           "Access-Control-Allow-Origin": "*"});
@@ -49,7 +49,7 @@ class PhotosList {
       log(now.toLocal().toString());
       log(nowTimeFormated.toString());
     final response =
-        await http.post(Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_dailypicks'),headers: <String, String>{
+        await http.post(Uri.parse('http://' + LoadBlancer.LBUrl + '/dailypicks'),headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           "Accept": "application/json",
           "Access-Control-Allow-Origin": "*"
@@ -81,7 +81,7 @@ class PhotosList {
   // api to send the photo id u liked
   Future<List> swipe(String photoId) async {
     final response = await http.post(
-        Uri.parse('http://' + LoadBlancer.LBUrl + "/lb_swipe"),
+        Uri.parse('http://' + LoadBlancer.LBUrl + "/swipe"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           "Accept": "application/json",
@@ -151,7 +151,7 @@ class LogIn {
     log("ip:" + LoadBlancer.LBUrl);
     //log("LoadBlancer.LBUrl:"+ loadBalancerIp + " " + LoadBlancer().getLBUrl() + "End");
     final response = await http.post(
-      Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_login'),
+      Uri.parse('http://' + LoadBlancer.LBUrl + '/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Accept": "application/json",
@@ -188,7 +188,7 @@ class DataVisualizationApi {
   String userRefID = UserId.userId;
   Future<DataVisualData> clientVisualization() async {
     final response = await http.post(
-        Uri.parse('http://' + LoadBlancer.LBUrl + '/lb_clientVisualization'),
+        Uri.parse('http://' + LoadBlancer.LBUrl + '/clientVisualization'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           "Accept": "application/json",
