@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klody/appTheme.dart';
+import 'package:klody/barGraphPage.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/dataVisualData.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -21,6 +22,9 @@ class GraphPageState extends State<GraphPage> {
   Map<String, int> temp = {};
   Map<String, double> top5Data = {};
   double percentage = 0;
+
+  List<int> dataList = [];
+  List<String> dataNameList = [];
 
   Future<Map<String, double>> getData() async{
   await DataVisualizationApi().clientVisualization().then((value) {dataVisual = value;});
@@ -78,6 +82,7 @@ class GraphPageState extends State<GraphPage> {
     temp.forEach((key, value)
     {
       total += value;
+      
       //print(total);
     });
 
@@ -85,8 +90,12 @@ class GraphPageState extends State<GraphPage> {
     for( int i = 0; i<=4; i ++)
     {
       percentage = temp.values.elementAt(i)/total*100;
+      log(temp.keys.elementAt(i)+temp.values.elementAt(i).toString());
+      dataList.add(temp.values.elementAt(i));
+      dataNameList.add(temp.keys.elementAt(i));
       top5Data[temp.keys.elementAt(i)] = percentage;
       //print(top5Data);
+      
     }
     return top5Data;
 
@@ -125,11 +134,13 @@ class GraphPageState extends State<GraphPage> {
 )),//PieChart(dataMap: top5Data)),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/training');
+                  
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => BarGraphPage(dataList: dataList, dataNameList: dataNameList,)));
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Color(KhlodyTheme.superLikeColor)),
-                child: Text("To Swipe Page")),
+                child: Text("Bar Graph")),
           ],
         ),
       ),

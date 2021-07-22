@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:klody/DailyPics.dart';
-import 'package:klody/Photos.dart';
 import 'package:klody/dataVisualData.dart';
 import 'package:klody/imageId.dart';
 import 'package:klody/lambdaApi.dart';
-import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/userId.dart';
 
 class PhotosList {

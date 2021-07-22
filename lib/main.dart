@@ -3,18 +3,8 @@ import 'package:klody/dailySwipePage.dart';
 import 'package:klody/login.dart';
 import 'package:klody/trainingSwipePage.dart';
 import 'package:klody/graphPage.dart';
-
 import 'appTheme.dart';
 
-
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
-// TODO FIX SUPERLIKE GET THE CORRECT IMAGES 
 void main() {
   runApp(MyApp());
 }
