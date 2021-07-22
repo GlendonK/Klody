@@ -53,14 +53,41 @@ class BarChartSample4State extends State<BarChartSample4> {
   final Color normal = const Color(0xff64caad);
   final Color light = const Color(0xff73e8c9);
 
+   MediaQueryData _mediaQueryData;
+   double screenWidth;
+   double screenHeight;
+   double blockSizeHorizontal;
+   double blockSizeVertical;
+   double _safeAreaHorizontal;
+   double _safeAreaVertical;
+   double safeBlockHorizontal;
+   double safeBlockVertical;
+   Orientation _orientation;
+
   BarChartSample4State(this.dataList, this.dataNameList);
+  
 
   @override
   Widget build(BuildContext context) {
+      
+
+  _mediaQueryData = MediaQuery.of(context);
+  _orientation = MediaQuery.of(context).orientation;
+    screenWidth = _mediaQueryData.size.width;
+    screenHeight = _mediaQueryData.size.height;
+    blockSizeHorizontal = screenWidth/100;
+    blockSizeVertical = screenHeight/100;
+    _safeAreaHorizontal = _mediaQueryData.padding.left +
+        _mediaQueryData.padding.right;
+    _safeAreaVertical = _mediaQueryData.padding.top +
+        _mediaQueryData.padding.bottom;
+    safeBlockHorizontal = (screenWidth - _safeAreaHorizontal)/100;
+    safeBlockVertical = (screenHeight - _safeAreaVertical)/100;
     return Expanded(
       child: Container(
+        width: double.infinity,
         child: AspectRatio(
-          aspectRatio: 1.66,
+          aspectRatio: 1.77,
           child: Card(
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -103,7 +130,7 @@ class BarChartSample4State extends State<BarChartSample4> {
                             0xff939393,
                           ),
                           fontSize: 10),
-                      margin: 0,
+                      margin: 10,
                     ),
                   ),
                   gridData: FlGridData(
@@ -117,7 +144,7 @@ class BarChartSample4State extends State<BarChartSample4> {
                   borderData: FlBorderData(
                     show: false,
                   ),
-                  groupsSpace: 4,
+                  groupsSpace: blockSizeHorizontal * 10,
                   barGroups: getData(),
                 ),
               ),
@@ -129,13 +156,14 @@ class BarChartSample4State extends State<BarChartSample4> {
   }
 
   List<BarChartGroupData> getData() {
+
     return [
       BarChartGroupData(
         x: 0,
-        barsSpace: 4,
+        barsSpace: 10,
         barRods: [
           BarChartRodData(
-            width: 100,
+            width: blockSizeHorizontal * 8,
               y: dataList[0].toDouble(),
              
               borderRadius: const BorderRadius.all(Radius.zero)),
@@ -143,10 +171,10 @@ class BarChartSample4State extends State<BarChartSample4> {
       ),
       BarChartGroupData(
         x: 1,
-        barsSpace: 4,
+        barsSpace:10,
         barRods: [
           BarChartRodData(
-            width: 100,
+            width: blockSizeHorizontal * 8,
               y: dataList[1].toDouble(),
               
               borderRadius: const BorderRadius.all(Radius.zero)),
@@ -154,10 +182,10 @@ class BarChartSample4State extends State<BarChartSample4> {
       ),
       BarChartGroupData(
         x: 2,
-        barsSpace: 4,
+        barsSpace: 10,
         barRods: [
           BarChartRodData(
-            width: 100,
+            width: blockSizeHorizontal * 8,
               y: dataList[2].toDouble(),
               
               borderRadius: const BorderRadius.all(Radius.zero)),
@@ -165,10 +193,10 @@ class BarChartSample4State extends State<BarChartSample4> {
       ),
       BarChartGroupData(
         x: 3,
-        barsSpace: 4,
+        barsSpace: 10,
         barRods: [
           BarChartRodData(
-            width: 100,
+            width: blockSizeHorizontal * 8,
               y: dataList[3].toDouble(),
               
               borderRadius: const BorderRadius.all(Radius.zero)),
@@ -176,10 +204,10 @@ class BarChartSample4State extends State<BarChartSample4> {
       ),
        BarChartGroupData(
         x: 3,
-        barsSpace: 4,
+        barsSpace: 10,
         barRods: [
           BarChartRodData(
-            width: 100,
+            width: blockSizeHorizontal * 8,
               y: dataList[4].toDouble(),
               
               borderRadius: const BorderRadius.all(Radius.zero)),
