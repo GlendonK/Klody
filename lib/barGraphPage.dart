@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:klody/bottomNavigationBar.dart';
@@ -69,6 +71,11 @@ class BarChartSample4State extends State<BarChartSample4> {
 
   @override
   Widget build(BuildContext context) {
+    log("0:"+ dataNameList[0].toString());
+    log("1:"+ dataNameList[1].toString());
+    log("2:"+ dataNameList[2].toString());
+    log("3:"+ dataNameList[3].toString());
+    log("4:"+ dataNameList[4].toString());
       
 
   _mediaQueryData = MediaQuery.of(context);
@@ -108,16 +115,38 @@ class BarChartSample4State extends State<BarChartSample4> {
                       getTextStyles: (value) => const TextStyle(color: Color(0xff939393), fontSize: 10),
                       margin: 10,
                       getTitles: (double value) {
+                        // if (value < 0.5 && value >= 0.0) {
+                        //   log("AAAAA"+value.toString());
+                        //   return  dataNameList[0];
+                        // } else if (value < 1.5 && value > 0.5) {
+                        //   log("AAAAA"+value.toString());
+                        //    return dataNameList[1];
+                        // } else if (value < 2.5 && value >1.5) {
+                        //   log("AAAAA"+value.toString());
+                        //    return dataNameList[2];
+                        // } else if (value < 3.5 && value >2.5) {
+                        //   log("AAAAA"+value.toString());
+                        //    return dataNameList[3];
+                        // } else if (value < 4.5 && value >3.5) {
+                        //   log("AAAAA"+value.toString());
+                        //    return dataNameList[4];
+                        // }
+                        // return "";
                         switch (value.toInt()) {
                           case 0:
+                          log("AAAAA"+value.toString());
                             return dataNameList[0];
                           case 1:
+                          log("AAAAA"+value.toString());
                             return dataNameList[1];
                           case 2:
+                          log("AAAAA"+value.toString());
                             return dataNameList[2];
                           case 3:
+                          log("AAAAA"+value.toString());
                             return dataNameList[3];
                           case 4:
+                          log("AAAAA"+value.toString());
                             return dataNameList[4];
                           default:
                             return '';
@@ -131,7 +160,7 @@ class BarChartSample4State extends State<BarChartSample4> {
                             0xff939393,
                           ),
                           fontSize: 10),
-                      margin: 10,
+                      margin: 0,
                     ),
                   ),
                   gridData: FlGridData(
@@ -204,7 +233,7 @@ class BarChartSample4State extends State<BarChartSample4> {
           ],
       ),
        BarChartGroupData(
-        x: 3,
+        x: 4,
         barsSpace: 10,
         barRods: [
           BarChartRodData(

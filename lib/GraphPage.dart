@@ -5,6 +5,7 @@ import 'package:klody/appTheme.dart';
 import 'package:klody/barGraphPage.dart';
 import 'package:klody/bottomNavigationBar.dart';
 import 'package:klody/dataVisualData.dart';
+import 'package:klody/testGarph.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:klody/webApi.dart';
 
@@ -138,6 +139,9 @@ class GraphPageState extends State<GraphPage> {
                   Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) => BarGraphPage(dataList: dataList, dataNameList: dataNameList,)));
                 },
+                //  Navigator.pushReplacement(context, MaterialPageRoute(
+                //     builder: (context) => BarChartSample4()));
+                // },
                 style: ElevatedButton.styleFrom(
                     primary: Color(KhlodyTheme.superLikeColor)),
                 child: Text("Bar Graph")),
