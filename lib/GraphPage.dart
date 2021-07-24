@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:klody/appTheme.dart';
 import 'package:klody/barGraphPage.dart';
 import 'package:klody/bottomNavigationBar.dart';
@@ -26,6 +27,28 @@ class GraphPageState extends State<GraphPage> {
 
   List<int> dataList = [];
   List<String> dataNameList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // lock in portrait mode
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
+
+   @override
+  dispose() {
+    // release lock from potrait mode.
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
 
   Future<Map<String, double>> getData() async{
   await DataVisualizationApi().clientVisualization().then((value) {dataVisual = value;});
