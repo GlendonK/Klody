@@ -24,7 +24,7 @@ class BarGraphPageState extends State<BarGraphPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Swipe Page"),
+        title: Text("Bar Graph"),
       ),
       body: Center(
         child: Column(
@@ -115,38 +115,21 @@ class BarChartSample4State extends State<BarChartSample4> {
                       getTextStyles: (value) => const TextStyle(color: Color(0xff939393), fontSize: 10),
                       margin: 10,
                       getTitles: (double value) {
-                        // if (value < 0.5 && value >= 0.0) {
-                        //   log("AAAAA"+value.toString());
-                        //   return  dataNameList[0];
-                        // } else if (value < 1.5 && value > 0.5) {
-                        //   log("AAAAA"+value.toString());
-                        //    return dataNameList[1];
-                        // } else if (value < 2.5 && value >1.5) {
-                        //   log("AAAAA"+value.toString());
-                        //    return dataNameList[2];
-                        // } else if (value < 3.5 && value >2.5) {
-                        //   log("AAAAA"+value.toString());
-                        //    return dataNameList[3];
-                        // } else if (value < 4.5 && value >3.5) {
-                        //   log("AAAAA"+value.toString());
-                        //    return dataNameList[4];
-                        // }
-                        // return "";
                         switch (value.toInt()) {
                           case 0:
-                          log("AAAAA"+value.toString());
+                          log("Case:"+value.toString());
                             return dataNameList[0];
                           case 1:
-                          log("AAAAA"+value.toString());
+                          log("Case:"+value.toString());
                             return dataNameList[1];
                           case 2:
-                          log("AAAAA"+value.toString());
+                          log("Case:"+value.toString());
                             return dataNameList[2];
                           case 3:
-                          log("AAAAA"+value.toString());
+                          log("Case:"+value.toString());
                             return dataNameList[3];
                           case 4:
-                          log("AAAAA"+value.toString());
+                          log("Case:"+value.toString());
                             return dataNameList[4];
                           default:
                             return '';
